@@ -7,11 +7,6 @@ $(document).ready(function () {
         $(this).css('background', '#1abc9c');
     });
 
-    $('#loginform').click(function () {
-        $('.formwrapper').fadeToggle('slow');
-        $(this).toggleClass('green');
-    });
-
     $('.formwrapper').find('input, textarea').on('keyup blur focus', function (e) {
 
         var $this = $(this),

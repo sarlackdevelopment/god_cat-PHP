@@ -8,18 +8,18 @@ and open the template in the editor.
     Author     : Korobov_A
 */
 
-#wrap {
+/*#wrap {
     margin: 0 auto 30px;
-}
+}*/
 
-#regbar {
+/*#regbar {
     height: 67px;
     background: #34495e;
-}
+}*/
 
-#navthing {
+/*#navthing {
     margin-left: 50px;
-}
+}*/
 
 h2 {
     padding: 20px;
@@ -36,11 +36,11 @@ h1 {
 .formwrapper {
     position: relative;
     /*width: 800px;*/
-    display: none;
+    /*display: none;*/
     background: rgba(19, 35, 47, 0.9);
     padding: 28px;
     max-width: 600px;
-    /*margin: 40px auto;*/
+    margin: 0 auto;
     border-radius: 4px;
     -webkit-box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
@@ -133,7 +133,7 @@ input, textarea {
     font-size: 22px;
     display: block;
     width: 100%;
-    height: 100%;
+    height: 5%;
     padding: 5px 10px;
     background: none;
     background-image: none;
