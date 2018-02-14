@@ -54,6 +54,7 @@ and open the template in the editor.
                             <li><a href="#">Продажи</a></li>
                             <li><a href="#">Контакты</a></li>
                             <li><a id="loginform" href="loginform.php">Войти</a></li>
+                            <li><a href="testAddImages.php">Тест</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
@@ -179,7 +180,32 @@ and open the template in the editor.
 
                 <div class="row featured isotope">
                     
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
+                    <?php
+                    
+                    for ($i = 1; $i <= 3; $i++) {
+                        echo "<div class='col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item'>";
+                        echo "  <div class='product-item'>";
+                        echo "      <img src='images/Галлерея/Все/small/IMG_0002.JPG' class='img-responsive' width='255' height='322' alt=''>";
+                        echo "      <div class='product-hover'>";
+                        echo "          <div class='product-meta'>";
+                        echo "              <a href='#'><i class='pe-7s-like'></i></a>";
+                        echo "              <a href='#'><i class='pe-7s-shuffle'></i></a>";
+                        echo "              <a href='#'><i class='pe-7s-cart'></i>В корзину</a>";
+                        echo "          </div>";
+                        echo "      </div>";
+                        echo "      <div class='product-title'>";
+                        echo "          <a href='#'>";
+                        echo "              <h3>Чайник</h3>";
+                        echo "              <span>700 руб.</span>";
+                        echo "          </a>";
+                        echo "      </div>";
+                        echo "  </div>";
+                        echo "</div>";
+                    } 
+                    
+                    ?>
+                    
+                    <!--<div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
                         <div class="product-item">
                             <img src="images/Галлерея/Все/small/IMG_0002.JPG" class="img-responsive" width="255" height="322" alt="">
                             <div class="product-hover">
@@ -398,7 +424,7 @@ and open the template in the editor.
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     
                 </div>
 
