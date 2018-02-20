@@ -5,6 +5,9 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
+    <?php
+    require 'includes/gallery/gallery.php';
+    ?>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -182,25 +185,20 @@ and open the template in the editor.
                     
                     <?php
                     
+                    
+                    
                     for ($i = 1; $i <= 3; $i++) {
-                        echo "<div class='col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item'>";
-                        echo "  <div class='product-item'>";
-                        echo "      <img src='images/Галлерея/Все/small/IMG_0002.JPG' class='img-responsive' width='255' height='322' alt=''>";
-                        echo "      <div class='product-hover'>";
-                        echo "          <div class='product-meta'>";
-                        echo "              <a href='#'><i class='pe-7s-like'></i></a>";
-                        echo "              <a href='#'><i class='pe-7s-shuffle'></i></a>";
-                        echo "              <a href='#'><i class='pe-7s-cart'></i>В корзину</a>";
-                        echo "          </div>";
-                        echo "      </div>";
-                        echo "      <div class='product-title'>";
-                        echo "          <a href='#'>";
-                        echo "              <h3>Чайник</h3>";
-                        echo "              <span>700 руб.</span>";
-                        echo "          </a>";
-                        echo "      </div>";
-                        echo "  </div>";
-                        echo "</div>";
+                        
+                        $imgInfo = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
+                                    'location' => 'cat-3',
+                                    'width' => '255',
+                                    'height' => '322',
+                                    'alt' => 'Изображение отсутсвует'];
+                        
+                        if (!exitsImageWithPath($imgInfo['path'])) {
+                            addImageInDB($imgInfo);
+                        }
+                        printImageByPath($imgInfo);
                     } 
                     
                     ?>
