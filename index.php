@@ -185,21 +185,59 @@ and open the template in the editor.
                     
                     <?php
                     
+                    $location = 'cat-3';
                     
+                    $imgInfo1 = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
+                                'location' => $location,
+                                'width' => '255',
+                                'height' => '322',
+                                'alt' => 'Изображение отсутсвует'];
                     
-                    for ($i = 1; $i <= 3; $i++) {
-                        
-                        $imgInfo = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
-                                    'location' => 'cat-3',
-                                    'width' => '255',
-                                    'height' => '322',
-                                    'alt' => 'Изображение отсутсвует'];
-                        
-                        if (!exitsImageWithPath($imgInfo['path'])) {
-                            addImageInDB($imgInfo);
-                        }
-                        printImageByPath($imgInfo);
-                    } 
+                    $imgInfo2 = ['path' => 'images/Галлерея/Все/small/IMG_0003.JPG',
+                                'location' => $location,
+                                'width' => '255',
+                                'height' => '322',
+                                'alt' => 'Изображение отсутсвует'];
+                    
+                    $imgInfo3 = ['path' => 'images/Галлерея/Все/small/IMG_0004.JPG',
+                                'location' => $location,
+                                'width' => '255',
+                                'height' => '322',
+                                'alt' => 'Изображение отсутсвует'];
+                    
+                    $imgInfo4 = ['path' => 'images/Галлерея/Все/small/IMG_0005.JPG',
+                                'location' => $location,
+                                'width' => '255',
+                                'height' => '322',
+                                'alt' => 'Изображение отсутсвует'];
+                    
+                    //echo "<pre>";
+                    //print_r(getCategory($location));
+                    //$category = getCategory($location);
+                    //echo $category;
+                    //test($imgInfo1);
+                    //testShow();
+                    
+                    addRelationIMG_Category($imgInfo1);
+                    addRelationIMG_Category($imgInfo2);
+                    addRelationIMG_Category($imgInfo3);
+                    addRelationIMG_Category($imgInfo4);
+                                            
+                    fullLocationOfGallery($location);                        
+
+//                    for ($i = 1; $i <= 3; $i++) {
+//                        
+//                        $imgInfo = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
+//                                    'location' => 'cat-3',
+//                                    'width' => '255',
+//                                    'height' => '322',
+//                                    'alt' => 'Изображение отсутсвует'];
+//                        
+//                        if (!exitsImageWithPath($imgInfo['path'])) {
+//                            addImageInDB($imgInfo);
+//                        }
+//                        printImageByPath($imgInfo);
+//                    } 
                     
                     ?>
                     

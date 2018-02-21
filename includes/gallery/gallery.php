@@ -2,11 +2,61 @@
 
 require 'includes/db.php';
 
+function fullLocationOfGallery($location) {
+    
+    $category = getCategory($location);
+    
+    foreach ($category->ownImgtableList as $img) {
+        
+        $imgInfo = ['path' => $img->path,
+                    'location' => $location,
+                    'width' => $img->width,
+                    'height' => $img->height,
+                    'alt' => $img->alt];
+        
+        printImageByInfo($imgInfo);
+        
+    }
+    
+}
+
+function addRelationIMG_Category($imgInfo) {
+    
+    if (!exitsImageWithPath($imgInfo['path'])) {
+        
+        $category = getCategory($imgInfo['location']);
+
+        $img = R::dispense('imgtable');
+        $img->path = $imgInfo['path'];
+        $img->width = $imgInfo['width'];
+        $img->height = $imgInfo['height'];
+        $img->alt = $imgInfo['alt'];
+
+        $category->ownImgtableList[] = $img;
+
+        R::store($category);
+        
+    }
+}
+
+function getCategory($nameCategory) {
+    
+    $category = R::findOne('categorytable', 'name = ?', array($nameCategory));
+    
+    if (!$category) {
+        $category = R::dispense('categorytable');
+        $category->name = $nameCategory;
+        R::store($category);
+    }
+    
+    return $category;
+    
+}
+
 function addImageInDB($imgInfo) {
     
     $img = R::dispense('imgtable');
     $img->path = $imgInfo['path'];
-    $img->location = $imgInfo['location'];
     $img->width = $imgInfo['width'];
     $img->height = $imgInfo['height'];
     $img->alt = $imgInfo['alt'];
@@ -23,7 +73,7 @@ function exitsImageWithPath($path) {
     }
 }
 
-function printImageByPath($imgInfo) {
+function printImageByInfo($imgInfo) {
     
     $path = $imgInfo['path'];
     $location = $imgInfo['location'];
