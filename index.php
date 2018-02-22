@@ -211,13 +211,6 @@ and open the template in the editor.
                                 'height' => '322',
                                 'alt' => 'Изображение отсутсвует'];
                     
-                    //echo "<pre>";
-                    //print_r(getCategory($location));
-                    //$category = getCategory($location);
-                    //echo $category;
-                    //test($imgInfo1);
-                    //testShow();
-                    
                     addRelationIMG_Category($imgInfo1);
                     addRelationIMG_Category($imgInfo2);
                     addRelationIMG_Category($imgInfo3);
