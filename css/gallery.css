@@ -1,0 +1,20 @@
+
+.load-file-buttons {
+    
+    text-decoration:none;
+    text-align:center;
+    padding:3px 8px;
+    border:solid 1px #004F72;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius: 4px;
+    font:16px Roboto, Helvetica, sans-serif;
+    font-weight:bold;
+    color:#fcfcfc;
+    background:#1abc9c;
+    -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+    -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;
+    box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+    
+}
+

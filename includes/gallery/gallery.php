@@ -2,6 +2,53 @@
 
 require 'includes/db.php';
 
+function upLoadImageInCatalog() {
+    
+    if (isset($_FILES['image'])) {
+        
+        $errors = array();
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        //$file_type = $_FILES['image']['type'];
+        //$extentions = array('jpeg', 'jpg', 'png');
+
+        if ($file_size > 209752) {
+            $errors[] = 'Файл должен весить не больше двух мегабайтов';
+        }
+
+        if (empty($errors) == TRUE) {
+            move_uploaded_file($file_tmp, 'images/testupload/' . $file_name);
+            echo '<div style="color: green;">' . 'Файлы успешно загружены' . '</div><hr>';
+        } else {
+            echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
+        }
+        
+    }
+}
+
+function addImagePathInDB() {
+    
+}
+
+function categoryIsEmpty($nameCategory) {
+    
+    $category = R::findOne('categorytable', 'name = ?', array($nameCategory));
+    
+    if (!$category) {
+        return TRUE;
+    } else {
+        return count($category->ownImgtableList) == 0;
+//        return empty($category->ownImgtableList);
+//            if (count($category->ownImgtableList) == 0) {
+//                return TRUE;
+//            } else {
+//                return FALSE;
+//            }   
+    }
+    
+}
+
 function fullLocationOfGallery($location) {
     
     $category = getCategory($location);
@@ -65,12 +112,14 @@ function addImageInDB($imgInfo) {
 }
 
 function exitsImageWithPath($path) {
+    
     $img = R::findOne('imgtable', 'path = ?', array($path));
     if ($img) {
         return TRUE;
     } else {
         return FALSE;
     }
+    
 }
 
 function printImageByInfo($imgInfo) {

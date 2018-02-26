@@ -15,12 +15,14 @@ if (isset($_FILES['image'])) {
         $errors[] = 'Файл должен весить не больше двух мегабайтов';
     }
     
-    //if (empty($errors) == TRUE) {
+    if (empty($errors) == TRUE) {
         move_uploaded_file($file_tmp, 'images/testupload/'.$file_name);
-    //    echo 'Файлы успешно загружены!';
-    //} else {
-    //    //print $errors;
-    //}
+        echo '<div style="color: green;">' . 'Файлы успешно загружены' . '</div><hr>';
+    } else {
+        echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
+    }
+    
+    //var_dump($_FILES['image']);
 }
 ?>
 

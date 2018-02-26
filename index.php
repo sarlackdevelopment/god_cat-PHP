@@ -19,6 +19,7 @@ and open the template in the editor.
         
         <link rel="icon" href="images/favicon.png">
         <link rel="stylesheet" href="css\style.css">
+        <link rel="stylesheet" href="css\gallery.css">
 
 <!--        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script  src="js/form.js"></script>-->
@@ -167,6 +168,20 @@ and open the template in the editor.
                             <h1>МАГАЗИН</h1>
                         </div>
                     </div>
+                    
+<!--                    <div class="col-md-12">
+                        <form action="gallery.php" method="post" enctype="multipart/form-data">                      
+                            <input type="file" name="image" class="load-file-buttons">
+                            <input type="submit" class="load-file-buttons">                                               
+                            <select Альбомы>
+                                <option>Кружки</option>
+                                <option>Чайники</option> 
+                                <option>Наборы</option> 
+                            </select>
+                        </form>
+                    </div>-->
+                    
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -181,58 +196,57 @@ and open the template in the editor.
                     </div>
                 </div>
 
+
+                
                 <div class="row featured isotope">
                     
+                    
+                    
                     <?php
+                        
+//                    if (categoryIsEmpty('cat-31')) {
+//                       echo '<div style="color: green;">' . 'Альбом с чайниками пуст. Для добавления новых фото <br>'
+//                               . 'воспользуся кнопкой Выбрать файлы, после выбора <br> нажми Отправить и перезагрузи страницу' . '</div>';
+//                    }
                     
-                    $location = 'cat-3';
+                    //upLoadImageInCatalog();
                     
-                    $imgInfo1 = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
-                                'location' => $location,
-                                'width' => '255',
-                                'height' => '322',
-                                'alt' => 'Изображение отсутсвует'];
-                    
-                    $imgInfo2 = ['path' => 'images/Галлерея/Все/small/IMG_0003.JPG',
-                                'location' => $location,
-                                'width' => '255',
-                                'height' => '322',
-                                'alt' => 'Изображение отсутсвует'];
-                    
-                    $imgInfo3 = ['path' => 'images/Галлерея/Все/small/IMG_0004.JPG',
-                                'location' => $location,
-                                'width' => '255',
-                                'height' => '322',
-                                'alt' => 'Изображение отсутсвует'];
-                    
-                    $imgInfo4 = ['path' => 'images/Галлерея/Все/small/IMG_0005.JPG',
-                                'location' => $location,
-                                'width' => '255',
-                                'height' => '322',
-                                'alt' => 'Изображение отсутсвует'];
-                    
-                    addRelationIMG_Category($imgInfo1);
-                    addRelationIMG_Category($imgInfo2);
-                    addRelationIMG_Category($imgInfo3);
-                    addRelationIMG_Category($imgInfo4);
-                                            
-                    fullLocationOfGallery($location);                        
-
-//                    for ($i = 1; $i <= 3; $i++) {
-//                        
-//                        $imgInfo = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
-//                                    'location' => 'cat-3',
-//                                    'width' => '255',
-//                                    'height' => '322',
-//                                    'alt' => 'Изображение отсутсвует'];
-//                        
-//                        if (!exitsImageWithPath($imgInfo['path'])) {
-//                            addImageInDB($imgInfo);
-//                        }
-//                        printImageByPath($imgInfo);
-//                    } 
+//                    $location = 'cat-3';
+//                    
+//                    $imgInfo1 = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
+//                                'location' => $location,
+//                                'width' => '255',
+//                                'height' => '322',
+//                                'alt' => 'Изображение отсутсвует'];
+//                    
+//                    $imgInfo2 = ['path' => 'images/Галлерея/Все/small/IMG_0003.JPG',
+//                                'location' => $location,
+//                                'width' => '255',
+//                                'height' => '322',
+//                                'alt' => 'Изображение отсутсвует'];
+//                    
+//                    $imgInfo3 = ['path' => 'images/Галлерея/Все/small/IMG_0004.JPG',
+//                                'location' => $location,
+//                                'width' => '255',
+//                                'height' => '322',
+//                                'alt' => 'Изображение отсутсвует'];
+//                    
+//                    $imgInfo4 = ['path' => 'images/Галлерея/Все/small/IMG_0005.JPG',
+//                                'location' => $location,
+//                                'width' => '255',
+//                                'height' => '322',
+//                                'alt' => 'Изображение отсутсвует'];
+//                    
+//                    addRelationIMG_Category($imgInfo1);
+//                    addRelationIMG_Category($imgInfo2);
+//                    addRelationIMG_Category($imgInfo3);
+//                    addRelationIMG_Category($imgInfo4);
+//                                            
+//                    fullLocationOfGallery($location);                         
                     
                     ?>
+                    
+                    
                     
                     <!--<div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
                         <div class="product-item">
