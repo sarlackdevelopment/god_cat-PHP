@@ -8,19 +8,6 @@ and open the template in the editor.
     Author     : Korobov_A
 */
 
-/*#wrap {
-    margin: 0 auto 30px;
-}*/
-
-/*#regbar {
-    height: 67px;
-    background: #34495e;
-}*/
-
-/*#navthing {
-    margin-left: 50px;
-}*/
-
 h2 {
     padding: 20px;
     color: #ecf0f1;
@@ -35,8 +22,6 @@ h1 {
 
 .formwrapper {
     position: relative;
-    /*width: 800px;*/
-    /*display: none;*/
     background: rgba(19, 35, 47, 0.9);
     padding: 28px;
     max-width: 600px;

@@ -38,28 +38,22 @@ function categoryIsEmpty($nameCategory) {
     if (!$category) {
         return TRUE;
     } else {
-        return count($category->ownImgtableList) == 0;
-//        return empty($category->ownImgtableList);
-//            if (count($category->ownImgtableList) == 0) {
-//                return TRUE;
-//            } else {
-//                return FALSE;
-//            }   
+        return count($category->ownImgtableList) == 0;   
     }
     
 }
 
-function fullLocationOfGallery($location) {
+function fullLocationOfGallery($nameCategory) {
     
-    $category = getCategory($location);
+    $allImageByCategory = getAllImageByCategory($nameCategory);
     
-    foreach ($category->ownImgtableList as $img) {
+    foreach ($allImageByCategory as $currentImage) {
         
-        $imgInfo = ['path' => $img->path,
-                    'location' => $location,
-                    'width' => $img->width,
-                    'height' => $img->height,
-                    'alt' => $img->alt];
+        $imgInfo = ['path' => $currentImage->path,
+                    'location' => $nameCategory,
+                    'width' => $currentImage->width,
+                    'height' => $currentImage->height,
+                    'alt' => $currentImage->alt];
         
         printImageByInfo($imgInfo);
         
@@ -97,6 +91,18 @@ function getCategory($nameCategory) {
     }
     
     return $category;
+    
+}
+
+function getAllImageByCategory($nameCategory) {
+    
+    return getCategory($nameCategory)->ownImgtableList;
+    
+}
+
+function getAllCategory() {
+    
+    return R::findAll('categorytable');
     
 }
 

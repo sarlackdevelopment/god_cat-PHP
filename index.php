@@ -168,42 +168,45 @@ and open the template in the editor.
                             <h1>МАГАЗИН</h1>
                         </div>
                     </div>
-                    
-<!--                    <div class="col-md-12">
-                        <form action="gallery.php" method="post" enctype="multipart/form-data">                      
-                            <input type="file" name="image" class="load-file-buttons">
-                            <input type="submit" class="load-file-buttons">                                               
-                            <select Альбомы>
-                                <option>Кружки</option>
-                                <option>Чайники</option> 
-                                <option>Наборы</option> 
-                            </select>
-                        </form>
-                    </div>-->
-                    
-                    
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="filter-menu">
-                            <ul class="button-group sort-button-group">
+                            <ul class="button-group sort-button-group cl1">
                                 <li class="button active" data-category="all">Все<span>12</span></li>
                                 <li class="button" data-category="cat-1">Кружки<span>5</span></li>
                                 <li class="button" data-category="cat-2">Чайники<span>3</span></li>
                                 <li class="button" data-category="cat-3">Наборы<span>4</span></li>
+                                <li><a id="loginform" href="AdminPanel.php">Добавление</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
-
                 
                 <div class="row featured isotope">
                     
-                    
-                    
                     <?php
-                        
+                     
+                    
+//                    $location = 'cat-1';
+//                    
+//                    $imgInfo1 = ['path' => 'images/Галлерея/Все/small/IMG_0007.JPG',
+//                                'location' => $location,
+//                                'width' => '255',
+//                                'height' => '322',
+//                                'alt' => 'Изображение отсутсвует'];
+//                    
+//                    $imgInfo2 = ['path' => 'images/Галлерея/Все/small/IMG_0008.JPG',
+//                                'location' => $location,
+//                                'width' => '255',
+//                                'height' => '322',
+//                                'alt' => 'Изображение отсутсвует'];
+//                    
+//                    addRelationIMG_Category($imgInfo1);
+//                    addRelationIMG_Category($imgInfo2);
+//                    
+//                    fullLocationOfGallery($location);
+
 //                    if (categoryIsEmpty('cat-31')) {
 //                       echo '<div style="color: green;">' . 'Альбом с чайниками пуст. Для добавления новых фото <br>'
 //                               . 'воспользуся кнопкой Выбрать файлы, после выбора <br> нажми Отправить и перезагрузи страницу' . '</div>';
@@ -613,7 +616,7 @@ and open the template in the editor.
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
-        <script src="js/custom.js"></script>  
+        <script src="js/custom.js"></script> 
         
     </body>
 </html>
