@@ -22,7 +22,6 @@ if (isset($_FILES['image'])) {
         echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
     }
     
-    //var_dump($_FILES['image']);
 }
 ?>
 
@@ -53,41 +52,6 @@ if (isset($_FILES['image'])) {
             <input type="file" name="image">
             <input type="submit">
         </form>
-
-<!--        <div id="drop-files" ondragover="return false">
-            <p>Перетащите изображение сюда</p>
-            <form id="frm">
-                <input type="file" id="uploadbtn" multiple />
-            </form>
-        </div>
-
-         Область предварительного просмотра 
-        <div id="uploaded-holder"> 
-            <div id="dropped-files">
-                 Кнопки загрузить и удалить, а также количество файлов 
-                <div id="upload-button">
-                    <center>
-                        <span>0 Файлов</span>
-                        <a href="#" class="upload">Загрузить</a>
-                        <a href="#" class="delete">Удалить</a>
-                         Прогресс бар загрузки 
-                        <div id="loading">
-                            <div id="loading-bar">
-                                <div class="loading-color"></div>
-                            </div>
-                            <div id="loading-content"></div>
-                        </div>
-                    </center>
-                </div>  
-            </div>
-        </div>
-        
-         Список загруженных файлов 
-        <div id="file-name-holder">
-            <ul id="uploaded-files">
-                <h1>Загруженные файлы</h1>
-            </ul>
-        </div>-->
 
         
 

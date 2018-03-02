@@ -28,7 +28,7 @@ function upLoadImageInCatalog() {
 }
 
 function addImagePathInDB() {
-    
+    return 'test';
 }
 
 function categoryIsEmpty($nameCategory) {
@@ -39,6 +39,18 @@ function categoryIsEmpty($nameCategory) {
         return TRUE;
     } else {
         return count($category->ownImgtableList) == 0;   
+    }
+    
+}
+
+function imageExist($path) {
+    
+    $image = R::findOne('imgtable', 'path = ?', array($path));
+    
+    if ($image) {
+        return TRUE;
+    } else {
+        return FALSE;
     }
     
 }
