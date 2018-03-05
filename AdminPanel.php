@@ -18,18 +18,18 @@
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
         <script>
             
-            $(document).ready(function () {
-                $('button').each(function(i, elem) {
-                    
-                    var elemId = elem.id;
-                    if (elemId.endsWith('DeleteDb')) {
-                        //alert('Удаление из базы данных элемента: ' + elemId);
-                    } else if (elemId.endsWith('DeleteFileSystem')) {
-                        //alert('Удаление элемента из временного каталога: ' + elemId);
-                    }
-                    
-                });
-            });
+//            $(document).ready(function () {
+//                $('button').each(function(i, elem) {
+//                    
+//                    var elemId = elem.id;
+//                    if (elemId.endsWith('DeleteDb')) {
+//                        alert('Удаление из базы данных элемента: ' + elemId);
+//                    } else if (elemId.endsWith('DeleteFileSystem')) {
+//                        alert('Удаление элемента из временного каталога: ' + elemId);
+//                    }
+//                    
+//                });
+//            });
             
         </script>
         
@@ -76,146 +76,197 @@
             </form>           
         </div>-->
         
-        <?php testtest(); ?>
+        
         
         <div>
+            
+            <?php loadFilesInTemp(); ?>
 
-            <table class="tftable" border="3">
+            
+                
+            
+<!--            <table class="tftable" border="3">-->
 
                 <?php
-                echo '<tr>';
-
-                $allCategory = getAllCategory();
-                foreach ($allCategory as $currentCategory) {
-
-                    $nameCategory = $currentCategory->name;
-                    echo "
-                    <th>
-                        <div style='display: flex; justify-content: center; flex-wrap: wrap;'>
-                            <div style='margin: 3px; color: blue;'>
-                                $nameCategory
-                            </div>
-                            <div style='margin: 3px'>
-                                <form action='AdminPanel.php' method='post' enctype='multipart/form-data'>
-                                    <div style='display: flex; justify-content: center; flex-wrap: wrap;'>
-                                        <input type='file' name='image[]' multiple>
-                                        <input type='hidden' type='text' value=$nameCategory name='nameCategory'>
-                                        <input type='submit' value='Добавить файлы'>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </th>";
-                }
-
-                echo '</tr>';
-
-                foreach ($allCategory as $currentCategory) {
-
-                    echo '<tr>';
-
-                    $nameCategory = $currentCategory->name;
-                    $allImageByCategory = getAllImageByCategory($nameCategory);
-
-                    foreach ($allImageByCategory as $currentImage) {
-                        
-                        $path = $currentImage->path; 
-                        $alt = "Изображение отсутствует"; 
-                        $id = $currentImage->id;
-                        $id_DeleteDb = $id . 'DeleteDb';
-                        $id_DeleteSystem = $id . 'DeleteFileSystem';
-                        
-                        echo "
-                        <td id=$id>
-                            <div style='display: flex; justify-content: center; flex-wrap: wrap;'>
-                                <div style='margin: 3px'>
-                                    <img src=$path width=150px height=100px alt=$alt>
-                                </div>
-                                <div style='margin: 3px'>
-                                    <ul style='margin-left: 0; padding-left: 0;'>";
-                        
+//                echo '<tr>';
+//
+//                $allCategory = getAllCategory();
+//                foreach ($allCategory as $currentCategory) {
+//
+//                    $nameCategory = $currentCategory->name;
+//                    echo "
+//                    <th>
+//                        <div style='display: flex; justify-content: center; flex-wrap: wrap;'>
+//                            <div style='margin: 3px; color: blue;'>
+//                                $nameCategory
+//                            </div>
+//                            <div style='margin: 3px'>
+//                                <form action='AdminPanel.php' method='post' enctype='multipart/form-data'>
+//                                    <div style='display: flex; justify-content: center; flex-wrap: wrap;'>
+//                                        <input type='file' name='image[]' multiple>
+//                                        <input type='hidden' type='text' value=$nameCategory name='nameCategory'>
+//                                        <input type='submit' value='Добавить файлы'>
+//                                    </div>
+//                                </form>
+//                            </div>
+//                        </div>
+//                    </th>";
+//                }
+//
+//                echo '</tr>';
+//
+//                foreach ($allCategory as $currentCategory) {
+//
+//                    echo '<tr>';
+//
+//                    $nameCategory = $currentCategory->name;
+//                    $allImageByCategory = getAllImageByCategory($nameCategory);
+//
+//                    foreach ($allImageByCategory as $currentImage) {
+//                        
+//                        $path = $currentImage->path; 
+//                        $alt = "Изображение отсутствует"; 
+//                        $id = $currentImage->id;
+//                        
+//                        echo "
+//                        <td id=$id>
+//                            <div style='display: flex; justify-content: center; flex-wrap: wrap;'>
+//                                <div style='margin: 3px'>
+//                                    <img src=$path width=150px height=100px alt=$alt>
+//                                </div>
+//                                <div style='margin: 3px'>
+//                                    <ul style='margin-left: 0; padding-left: 0;'>";                        
 //                        echo            "<li style='list-style-type: none;'>" . imageExist($path) . "</li>";
-//                        echo            "<li style='list-style-type: none;'>" . addImagePathInDB() . "</li>";
-//                        echo            "<li style='list-style-type: none;'><form action='AdminPanel.php' method='post'><input name=$path type='submit'></form></li>";
-//                        echo            "<li style='list-style-type: none;'><form action='AdminPanel.php' method='post'><input name='do_singup1' type='submit'></form></li>";
-                              
-                        echo            "<li style='list-style-type: none;'><button id=$id_DeleteDb>Удалить из базы</button></li>";
-                        echo            "<li style='list-style-type: none;'><button id=$id_DeleteSystem>Удалить с диска</button></li>";
-                        
-                        echo "      </ul>
-                                </div>
-                            </div>
-                        </td>";
-                    }
-
-                    echo '</tr>';
-                }
+//                        echo            "<li style='list-style-type: none;'><button id=$id>Удалить из базы</button></li>";
+//                        echo            "<li style='list-style-type: none;'><button id=$id>Реальный размер</button></li>";                        
+//                        echo "      </ul>
+//                                </div>
+//                            </div>
+//                        </td>";
+//                    }
+//
+//                    echo '</tr>';
+//                }
+//                
+//                
                 ?>
 
-            </table>
+<!--            </table>-->
             
         </div>
         
         <?php
             
-        function testtest() {
+        function loadFilesInTemp() {
             
-            $parameters = $_POST;
-            $files      = $_FILES;
-            
-            //echo count($files['name']);
-            
-            if (!empty($files)) {
-
+            $template = "<div style='display: flex; justify-content: center;'>
                 
-                for ($i = 0; $i < count($files['image']['name']); $i++) {
-                    if (!is_uploaded_file($files['image']['tmp_name'][$i])) {
-                        echo 'файл не загружен';
-                    } else {
-                        move_uploaded_file($files['image']['tmp_name'][$i], 'temp/' . $files['image']['name'][$i]);
-                    }
+                <div style='display: flex; flex-direction: column; justify-content: center;'> 
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                </div>
+                
+                <div style='display: flex; flex-direction: column; justify-content: flex-start;'> 
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                </div>
+                
+                <div style='display: flex; flex-direction: column; justify-content: flex-start;'> 
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                    <div style='background-color: blue; border: 4px solid red; width: 100px; height: 100px;'></div>
+                </div>
+                
+            </div>";
+            
+            echo "<div style='display: flex; justify-content: center;'>";
+            
+            $allCategory = getAllCategory();
+            foreach ($allCategory as $currentCategory) {
+
+                $nameCategory = $currentCategory->name;
+                $allImageByCategory = getAllImageByCategory($nameCategory);
+
+                echo "<div style='display: flex; flex-direction: column; justify-content: flex-start;'>";
+                
+                echo "<div style='display: flex; justify-content: center; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color: #abd28e; color: #333333; max-width: 200px; max-height: 35px;'>";
+                echo $nameCategory;
+                echo "</div>";
+                
+                foreach ($allImageByCategory as $currentImage) {
+                    echo "<div style='border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333; max-width: 200px; max-height: 200px;'>";
+                    $alt = "Изображение отсутствует";
+                    $path = $currentImage->path;
+                    echo "<img src=$path width=150px height=100px alt=$alt>";
+                    echo "</div>";
                 }
                 
+                echo "</div>";
+            }
+
+            echo "</div>";
+            
+            
+            
+            
+            
+            
+//            $temp1 = array();
+//            $temp_glog = array();
+//            
+//            $allCategory = getAllCategory();
+//            
+//            foreach ($allCategory as $currentCategory) { 
+//                $nameCategory = $currentCategory->name;
+//                $temp_glog[] = ['name' => $nameCategory, 'images' => getAllImageByCategory($nameCategory)];
+//            }
+//
+//            foreach ($temp_glog as $currentElement) {
+//                array_key_exists('first', $search_array)
+//            }
+            
+//            echo '<pre>';
+//            var_dump($temp_glog);
+//            echo '</pre>';
+            
+//            $files = $_FILES;
+//            
+//            if (!empty($files)) {
+//                
 //                for ($i = 0; $i < count($files['image']['name']); $i++) {
-//                    if (!is_uploaded_file($files['image']['tmp_name'][$i])) {
-//                        echo 'файл не загружен';
-//                    } else {
-//                        echo $files['image']['name'][$i];
+//                    if (is_uploaded_file($files['image']['tmp_name'][$i])) {
+//                        
+//                        $path = $files['image']['name'][$i];
+//                        
+//                        move_uploaded_file($files['image']['tmp_name'][$i], 'temp/' . $path);
+//                        addImageIn($path);
+//                        
 //                    }
 //                }
-                
-            }
-//                $arrayOfImage = $files['image'];
-//                if (isset($arrayOfImage)) {
-//                    echo '<pre>';
-//                    var_dump($arrayOfImage);
-//                    echo '</pre>';
-                //$errors = array();
-//                foreach ($arrayOfImage as $currentImage) {
-//                    echo $currentImage;
-//                    $file_name = $currentImage['name'];
-//                    $file_tmp  = $currentImage['tmp_name']; 
-//                    
-//                    move_uploaded_file($file_tmp, 'temp/'.$file_name);
-                    
-//                }
-                
-    
-//                if (empty($errors) == TRUE) {
-//                    move_uploaded_file($file_tmp, 'temp/'.$file_name);
-//                } else {
-//                    echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
-//                }
-            
+//                
 //            }
-//            }
-               
-            if (isset($parameters['nameCategory'])) {
-                
-                
-            }
             
         }
+        
+        function addImageIn($path) {
+            
+            $parameters = $_POST;
+            if (isset($parameters['nameCategory'])) {
+                $imgInfo = ['path'     => $path,
+                            'location' => $parameters['nameCategory'],
+                            'width'    => '255',
+                            'height'   => '322',
+                            'alt'      => 'Изображение отсутсвует'];
+                    
+                addRelationIMG_Category($imgInfo);
+                
+            }
+        }
+        
         ?>
         
     </body>
