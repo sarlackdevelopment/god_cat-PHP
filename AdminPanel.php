@@ -1,7 +1,5 @@
 <html>
-    <?php
-    require 'includes/gallery/gallery.php';
-    ?>
+<?php require 'includes/gallery/gallery.php'; ?>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -34,34 +32,23 @@
         </script>
         
     </head>
-    <body>
-        
-<!--        <style type="text/css">
-            .tftable {font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #9dcc7a;border-collapse: collapse;}
-            .tftable th {font-size:12px;background-color:#abd28e;border-width: 1px;padding: 8px;border-style: solid;border-color: #9dcc7a;text-align:left;}
-            .tftable tr {background-color:#bedda7;}
-            .tftable td {font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color: #9dcc7a;}
-            .tftable tr:hover {background-color:#ffffff;}
-        </style>-->
-
-        <!-- Общие требования
+    
+    <!-- Общие требования
         1. Разложить каталоги по столбцам.
         2. Разложить содержимое каталогов по столбцам в виде миникопии изображения.
         3. Организовать форму добавления с возможностью выбора категории изображений.
         4. Завести отдельный css для админской панели.
+        5. Организовать перемещение файлов из каталога по умолчанию в каталог, соответствующий альбому.
+        6. Добавить функциональность добавления каталога.
+        7. Добавить функциональность добаления или изменения цен. (Похоже можно будет сделать скользящее общее окно с настройками).
         -->
+    
+    <body>        
+<?php
+        constructAdminPanel();
+        handleOfAddFiles();
+        getPathForCategory();
         
-        <div>
-            
-            <?php 
-                constructAdminPanel();
-                handleOfAddFiles();
-            ?>
-            
-        </div>
-        
-        <?php
-            
         function constructAdminPanel() {
             
             echo "<div style='display: flex; justify-content: center;'>";
@@ -109,23 +96,41 @@
         
         function handleOfAddFiles() {
             
+            $parameters = $_POST;
             $files = $_FILES;
             
-            if (!empty($files)) {
+            if (!empty($files) and !empty($parameters)) {
                 
                 for ($i = 0; $i < count($files['image']['name']); $i++) {
                     if (is_uploaded_file($files['image']['tmp_name'][$i])) {
                         
-                        $path = $files['image']['name'][$i];
-                        
-                        move_uploaded_file($files['image']['tmp_name'][$i], 'temp/' . $path);
+                        $path = getPathForCategory() . '/' . $files['image']['name'][$i];  
+                        move_uploaded_file($files['image']['tmp_name'][$i], $path);
                         addImageIn($path);
                         
                     }
                 }
                 
-                @header("Location: ". $_SERVER["REQUEST_URI"]);
+            print'<meta http-equiv="refresh" content="0;AdminPanel.php">';    
                 
+            }
+            
+        }
+        
+        function getPathForCategory() {
+            
+            $parameters = $_POST;           
+            if (isset($parameters['nameCategory'])) {
+                
+                $nameCategory = $parameters['nameCategory'];
+                $commonpath = 'images/Галлерея/'. $nameCategory;
+            
+                if (!file_exists($commonpath)){
+                    mkdir($commonpath, 0700, true);        
+                }
+            
+                return $commonpath;
+            
             }
             
         }
@@ -145,7 +150,7 @@
             }
         }
         
-        ?>
+?>
         
     </body>
 </html>
