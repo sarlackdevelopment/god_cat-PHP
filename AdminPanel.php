@@ -15,19 +15,16 @@
 
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
         <script>
+
+            function funcSuccess(data) {
+                //alert(data);
+            };
             
-//            $(document).ready(function () {
-//                $('button').each(function(i, elem) {
-//                    
-//                    var elemId = elem.id;
-//                    if (elemId.endsWith('DeleteDb')) {
-//                        alert('Удаление из базы данных элемента: ' + elemId);
-//                    } else if (elemId.endsWith('DeleteFileSystem')) {
-//                        alert('Удаление элемента из временного каталога: ' + elemId);
-//                    }
-//                    
-//                });
-//            });
+            $(document).ready(function () {
+                $("button[name='DeleteImage']").bind("click", function() {
+                    $.get("WorkWithAjax.php", { idForDelete: "284" } );
+                });
+            });
             
         </script>
         
@@ -36,11 +33,12 @@
     <!-- Общие требования
         1. Разложить каталоги по столбцам.
         2. Разложить содержимое каталогов по столбцам в виде миникопии изображения.
-        3. Организовать форму добавления с возможностью выбора категории изображений.
+        3. Организовать форму добавления с возможностью выбора категории изображений (AJAX).
         4. Завести отдельный css для админской панели.
         5. Организовать перемещение файлов из каталога по умолчанию в каталог, соответствующий альбому.
         6. Добавить функциональность добавления каталога.
         7. Добавить функциональность добаления или изменения цен. (Похоже можно будет сделать скользящее общее окно с настройками).
+        8. Добавить возможность удаления изображения (AJAX).
         -->
     
     <body>        
@@ -56,34 +54,35 @@
             $allCategory = getAllCategory();
             foreach ($allCategory as $currentCategory) {
 
-                $nameCategory = $currentCategory->name;
+                $nameCategory       = $currentCategory->name;
                 $allImageByCategory = getAllImageByCategory($nameCategory);
-
-                echo "<div style='display: flex; flex-direction: column; justify-content: flex-start;'>";
                 
-                echo "<div style='display: flex; justify-content: center; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color: #abd28e; color: #333333; max-width: 300px; max-height: 35px;'>";
-                echo $nameCategory;
-                
-                echo "</div>";
-                
-                echo "<div style='border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333;'>
-                <form action='AdminPanel.php' method='post' enctype='multipart/form-data'>
-                                    <div style='display: flex; justify-content: center; flex-direction: column;'>
-                                        <input type='file' name='image[]' multiple>
-                                        <input type='hidden' type='text' value=$nameCategory name='nameCategory'>
-                                        <input type='submit' value='Добавить файлы'>
-                                    </div>
-                                </form>";
-                
-                echo "</div>";
+                echo "
+                <div style='display: flex; flex-direction: column; justify-content: flex-start;'>
+                    <div style='display: flex; justify-content: center; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color: #abd28e; color: #333333; max-width: 300px; max-height: 35px;'>
+                        $nameCategory
+                    </div>
+                    <div style='display: flex; justify-content: center; flex-direction: column; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333;'>
+                        <form action='AdminPanel.php' method='post' enctype='multipart/form-data'>
+                            <div style='display: flex; justify-content: center; flex-direction: column;'>
+                                <input type='file' name='image[]' multiple>
+                                <input type='hidden' type='text' value=$nameCategory name='nameCategory'>
+                                <input type='submit' name='AddImage' value='Добавить изображения'>                                        
+                            </div>
+                        </form>
+                        <button name='DeleteImage' value='Удалить отмеченные изображения'>Удалить отмеченные изображения</button>
+                    </div>";
                 
                 foreach ($allImageByCategory as $currentImage) {
                     
-                    echo "<div style='border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333; max-width: 250px; max-height: 200px;'>";
-                    $alt = "Изображение отсутствует";
-                    $path = $currentImage->path;
-                    echo "<img src=$path width=233px height=150px alt=$alt>";
-                    echo "</div>";
+                    $id_image = $currentImage->id;
+                    $alt      = "Изображение отсутствует";
+                    $path     = $currentImage->path;
+                    
+                    echo "<div style='position: relative; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333; max-width: 250px; max-height: 200px;'>
+                        <input style='position: absolute;' id='$id_image'; type='checkbox'>
+                        <img src=$path width=233px height=150px alt=$alt>
+                        </div>";
                     
                 }
                 
@@ -98,10 +97,17 @@
             
             $parameters = $_POST;
             $files = $_FILES;
-            
+           
             if (!empty($files) and !empty($parameters)) {
-                
-                for ($i = 0; $i < count($files['image']['name']); $i++) {
+                addFilesIntoDB($files);
+                print'<meta http-equiv="refresh" content="0;AdminPanel.php">';    
+            }
+            
+        }
+        
+        function addFilesIntoDB($files) {
+            
+            for ($i = 0; $i < count($files['image']['name']); $i++) {
                     if (is_uploaded_file($files['image']['tmp_name'][$i])) {
                         
                         $path = getPathForCategory() . '/' . $files['image']['name'][$i];  
@@ -111,12 +117,8 @@
                     }
                 }
                 
-            print'<meta http-equiv="refresh" content="0;AdminPanel.php">';    
-                
-            }
-            
         }
-        
+
         function getPathForCategory() {
             
             $parameters = $_POST;           

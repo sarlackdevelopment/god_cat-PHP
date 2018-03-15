@@ -27,9 +27,9 @@ require 'includes/db.php';
 //    }
 //}
 
-function addImagePathInDB() {
-    return 'test';
-}
+//function addImagePathInDB() {
+//    return 'test';
+//}
 
 function categoryIsEmpty($nameCategory) {
     
@@ -136,6 +136,15 @@ function exitsImageWithPath($path) {
         return TRUE;
     } else {
         return FALSE;
+    }
+    
+}
+
+function deleteImageByID($id) {
+    
+    $image = R::findOne('imgtable', 'id = ?', array($id)); 
+    if ($image) {
+        R::trash($image);
     }
     
 }

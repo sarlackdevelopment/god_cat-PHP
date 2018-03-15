@@ -186,7 +186,6 @@ and open the template in the editor.
                 <div class="row featured isotope">
                     
                     <?php
-                     
                     
 //                    $location = 'cat-1';
 //                    
