@@ -16,15 +16,40 @@
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
         <script>
 
-            function funcSuccess(data) {
-                //alert(data);
-            };
-            
-            $(document).ready(function () {
-                $("button[name='DeleteImage']").bind("click", function() {
-                    $.get("WorkWithAjax.php", { idForDelete: "284" } );
+                $(document).ready(function () {
+ 
+                    $("button[name='DeleteImage']").bind("click", function(event) {
+                        
+                        var $result = $("input:checkbox:checked");
+                        var idForDelete = new Array();
+                        
+                        if ($result.length) {
+                            
+                            $result.each(function(i, elem) {     
+
+                                var id = elem.id.replace("checkbox", "") + '_' + event.target.id;
+                                var $resultQuery = $('#' + id);
+                                
+                                if ($resultQuery.length) {
+                                    idForDelete.push(id);
+                                }
+                                
+                            });
+                       
+                            $.get("WorkWithAjax.php", { 'idForDelete[]': idForDelete }, funcSuccess );
+                        }
+                        
+                        function funcSuccess(data) {
+                            
+                            for (var id in idForDelete) {
+                                $("#" + idForDelete[id]).remove();
+                            }
+                            
+                        }
+                        
+                    });
+                    
                 });
-            });
             
         </script>
         
@@ -39,6 +64,7 @@
         6. Добавить функциональность добавления каталога.
         7. Добавить функциональность добаления или изменения цен. (Похоже можно будет сделать скользящее общее окно с настройками).
         8. Добавить возможность удаления изображения (AJAX).
+        9. Добавить работу с ценами (поле с абсолютным позиционированием, в которое можно будет вводить цену).
         -->
     
     <body>        
@@ -55,6 +81,7 @@
             foreach ($allCategory as $currentCategory) {
 
                 $nameCategory       = $currentCategory->name;
+                $id_Category        = $currentCategory->id;
                 $allImageByCategory = getAllImageByCategory($nameCategory);
                 
                 echo "
@@ -70,17 +97,18 @@
                                 <input type='submit' name='AddImage' value='Добавить изображения'>                                        
                             </div>
                         </form>
-                        <button name='DeleteImage' value='Удалить отмеченные изображения'>Удалить отмеченные изображения</button>
+                        <button id=$id_Category name='DeleteImage' value='Удалить отмеченные изображения'>Удалить отмеченные изображения</button>
                     </div>";
                 
                 foreach ($allImageByCategory as $currentImage) {
                     
-                    $id_image = $currentImage->id;
-                    $alt      = "Изображение отсутствует";
-                    $path     = $currentImage->path;
+                    $id_image    = $currentImage->id . '_' . $id_Category;
+                    $id_checkbox = $currentImage->id . 'checkbox';
+                    $alt         = "Изображение отсутствует";
+                    $path        = $currentImage->path;
                     
-                    echo "<div style='position: relative; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333; max-width: 250px; max-height: 200px;'>
-                        <input style='position: absolute;' id='$id_image'; type='checkbox'>
+                    echo "<div id='$id_image' style='position: relative; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333; max-width: 250px; max-height: 200px;'>
+                        <input style='position: absolute;' id='$id_checkbox'; type='checkbox'>
                         <img src=$path width=233px height=150px alt=$alt>
                         </div>";
                     
@@ -96,7 +124,7 @@
         function handleOfAddFiles() {
             
             $parameters = $_POST;
-            $files = $_FILES;
+            $files      = $_FILES;
            
             if (!empty($files) and !empty($parameters)) {
                 addFilesIntoDB($files);

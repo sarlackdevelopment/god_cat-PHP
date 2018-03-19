@@ -1,6 +1,15 @@
 <?php
     require 'includes/gallery/gallery.php';
-    deleteImageByID($_GET['idForDelete']);
-    //file_put_contents('newfile.txt', $_GET['name'], FILE_APPEND); 
-?>
+    
+    $get = $_GET;
+    
+    if (isset($get['idForDelete'])) { 
+        
+        $idImage    = $get['idForDelete'];
+        
+        foreach ($idImage as $currentImageId) {
+            deleteImageByID($currentImageId);
+        }
+
+    }
 
