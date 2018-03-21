@@ -1,5 +1,5 @@
 <html>
-<?php require 'includes/gallery/gallery.php'; ?>
+<?php require 'includes/gallery/gallery.php'; require 'includes/prices/prices.php';?>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -46,6 +46,16 @@
                             }
                             
                         }
+                        
+                    });
+                    
+                    $("button[name='FIX']").bind("click", function(event) {
+                        
+                        var idForAddPrice = event.target.id.replace("buttonFix", "");
+                        $.get("WorkWithAjax.php", 
+                            { 
+                                'idForAddPrice': idForAddPrice, 
+                                'currentPrice':  $('#' + idForAddPrice + 'price').val()} );
                         
                     });
                     
@@ -102,16 +112,30 @@
                 
                 foreach ($allImageByCategory as $currentImage) {
                     
-                    $id_image    = $currentImage->id . '_' . $id_Category;
-                    $id_checkbox = $currentImage->id . 'checkbox';
-                    $alt         = "Изображение отсутствует";
-                    $path        = $currentImage->path;
+                    $id_image     = $currentImage->id . '_' . $id_Category;
+                    $id_checkbox  = $currentImage->id . 'checkbox';
+                    $id_buttonFix = $currentImage->id . 'buttonFix';
+                    $id_price     = $currentImage->id . 'price';
+                    $alt          = "Изображение отсутствует";
+                    $path         = $currentImage->path;
+                    
+                    $currentPrice = getCurrentPriceByID($currentImage->id);
                     
                     echo "<div id='$id_image' style='position: relative; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333; max-width: 250px; max-height: 200px;'>
-                        <input style='position: absolute;' id='$id_checkbox'; type='checkbox'>
+                        <input style='position: absolute; left: 5px;' id='$id_checkbox'; type='checkbox'>
+                        
+                        <div style='position: absolute; display: flex; top: 120px; left: 3px;'>
+                            <div style='width: 50px; height: 30px; max-width: 50px; max-height: 30px; border: 3px solid #abd28e; opacity: 0.8;'>
+                                <font size='2' color='red'>Цена:</font>
+                            </div>
+                            <div style='width: 145px; height: 30px; max-width: 145px; max-height: 30px; border: 3px solid #abd28e; opacity: 0.8;'>
+                                <input id=$id_price style='width: 140px;' type='number' value='$currentPrice' size='40'>
+                            </div>
+                            <button id=$id_buttonFix name='FIX' value='FIX'>Фикс</button>
+                        </div>
+
                         <img src=$path width=233px height=150px alt=$alt>
-                        </div>";
-                    
+                        </div>";                    
                 }
                 
                 echo "</div>";

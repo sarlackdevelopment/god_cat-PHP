@@ -7,6 +7,7 @@ and open the template in the editor.
 <html>
     <?php
     require 'includes/gallery/gallery.php';
+    require 'includes/prices/prices.php';
     ?>
     <head>
         <meta charset="UTF-8">
@@ -186,6 +187,9 @@ and open the template in the editor.
                 <div class="row featured isotope">
                     
                     <?php
+                    
+                    //echo getCurrentPriceByID('156');
+                    //getPriceByID('156', 15000);
                     
 //                    $location = 'cat-1';
 //                    
