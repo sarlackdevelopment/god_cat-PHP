@@ -17,4 +17,8 @@
     if (isset($get['idForAddPrice']) and isset($get['currentPrice'])) { 
         setPriceByID($get['idForAddPrice'], $get['currentPrice']);
     }
+    
+    if (isset($get['$nameCategoryAdd'])) {
+        echo getCategory($get['$nameCategoryAdd'])->id;
+    }
 

@@ -18,34 +18,70 @@
 
                 $(document).ready(function () {
  
+                    var $result;
+                    var targetId;
+ 
                     $("button[name='DeleteImage']").bind("click", function(event) {
                         
-                        var $result = $("input:checkbox:checked");
-                        var idForDelete = new Array();
+                        $result  = $("input:checkbox:checked");
+                        targetId = event.target.id;
                         
                         if ($result.length) {
-                            
-                            $result.each(function(i, elem) {     
-
-                                var id = elem.id.replace("checkbox", "") + '_' + event.target.id;
-                                var $resultQuery = $('#' + id);
-                                
-                                if ($resultQuery.length) {
-                                    idForDelete.push(id);
-                                }
-                                
+                        
+                            event.preventDefault();
+                            $('#overlay').fadeIn(400, function() { 
+                                $('#modal_form').css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
+                            });	
+	
+                            $('#modal_close, #overlay').click( function() {
+                                $('#modal_form').animate({opacity: 0, top: '45%'}, 200, function() { 
+                                        $(this).css('display', 'none');
+                                        $('#overlay').fadeOut(400); 
+                                    });
                             });
-                       
-                            $.get("WorkWithAjax.php", { 'idForDelete[]': idForDelete }, funcSuccess );
                         }
                         
-                        function funcSuccess(data) {
+                    });
+                    
+                    $("button[name='Cancel']").bind("click", function(event) {
+                        
+                        $('#modal_form').animate({opacity: 0, top: '45%'}, 200, function() { 
+                            $(this).css('display', 'none');
+                            $('#overlay').fadeOut(400); 
+                        });
+                        
+                    });
+                    
+                    $("button[name='Delete']").bind("click", function(event) {
+                        
+                        $('#modal_form').animate({opacity: 0, top: '45%'}, 200, function() { 
+                            $(this).css('display', 'none');
+                            $('#overlay').fadeOut(400, function() {
+                                
+                                var idForDelete = new Array();                            
+                                $result.each(function(i, elem) {     
+                                    
+                                    var id = elem.id.replace("checkbox", "") + '_' + targetId;
+                                    var $resultQuery = $('#' + id);
+                                    
+                                    if ($resultQuery.length) {
+                                        idForDelete.push(id);
+                                    }
+                                
+                                });
+                       
+                                $.get("WorkWithAjax.php", { 'idForDelete[]': idForDelete }, funcSuccess );
+                        
+                                function funcSuccess(data) {
                             
-                            for (var id in idForDelete) {
-                                $("#" + idForDelete[id]).remove();
-                            }
+                                    for (var id in idForDelete) {
+                                        $("#" + idForDelete[id]).remove();
+                                    }
                             
-                        }
+                                }
+                                
+                            }); 
+                        });
                         
                     });
                     
@@ -57,6 +93,47 @@
                                 'idForAddPrice': idForAddPrice, 
                                 'currentPrice':  $('#' + idForAddPrice + 'price').val()} );
                         
+                    });
+                    
+                    $("button[name='ComeBack']").bind("click", function(event) {
+                        $(location).attr('href', 'index.php');
+                    });
+                    
+                    $("button[name='AddCategory']").bind("click", function(event) {                       
+                        
+                        var $result       = $('#nameCategory');
+                        var $nameCategory = $result.val();
+                        
+                        if (!$nameCategory.length) {
+                            $result.val('Имя, сестра! ИМЯ!');
+                            $result.css({'border': '1px solid red', 'font-style': 'oblique'});
+                        } else {    
+                            $.get("WorkWithAjax.php", { '$nameCategoryAdd': $nameCategory }, funcSuccessAdd );                            
+                        }
+                        
+                        function funcSuccessAdd(data) {
+                            
+                            $templateCategory = '<div style="display: flex; flex-direction: column; justify-content: flex-start;">'
+                                + '<div style="display: flex; justify-content: center; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color: #abd28e; color: #333333; max-width: 300px; max-height: 35px;">'
+                                + $nameCategory
+                                + '</div>'
+                                + '<div style="display: flex; justify-content: center; flex-direction: column; border: 1px solid #9dcc7a; border-collapse: collapse; font-size: 12px; background-color:#abd28e; color: #333333;">'
+                                + '<form action="AdminPanel.php" method="post" enctype="multipart/form-data">'
+                                + '<div style="display: flex; justify-content: center; flex-direction: column;">'
+                                + '<input type="file" name="image[]" multiple>'
+                                + '<input type="hidden" type="text" value=' + $nameCategory + ' name="nameCategory">'
+                                + '<input type="submit" name="AddImage" value="Добавить изображения">'
+                                + '</div>'
+                                + '</form>'
+                                + '<button id= ' + data + ' name="DeleteImage" value="Удалить отмеченные изображения">Удалить отмеченные изображения</button>'
+                                + '</div>'
+                                + '</div>'
+                            $('#containerImage').append($templateCategory);
+                            
+                        }
+                        
+                        // Дальше вызов сервера, добавление в базу, после отрисовка новой категории колбеком.
+                            
                     });
                     
                 });
@@ -75,9 +152,17 @@
         7. Добавить функциональность добаления или изменения цен. (Похоже можно будет сделать скользящее общее окно с настройками).
         8. Добавить возможность удаления изображения (AJAX).
         9. Добавить работу с ценами (поле с абсолютным позиционированием, в которое можно будет вводить цену).
+        10. Сделать кнопку возврата после редактирования.
+        11. Подобрать рабочий фон.
+        12. Подобрать названия для галлерей.
+        14. Нужно организовать функционал добавления категории (альбома) картинок.
+        15. Добавить функциональность удаления категории и организовать предупреждающего вопроса "Вы уверены?"
+        16. В случае удаления категории удалить все изображения и цены.
+        17. В случае удаления изображения, удалить все цены по нему.
+        19. В случае если удаляем последнюю картинку из галлереи, удалять и галлерею.
         -->
     
-    <body>        
+    <body style='background: #abd28e url(images/fone-for-admin.jpg); background-position: center center; background-repeat: no-repeat;'>        
 <?php
         constructAdminPanel();
         handleOfAddFiles();
@@ -85,8 +170,16 @@
         
         function constructAdminPanel() {
             
-            echo "<div style='display: flex; justify-content: center;'>";
+            echo "<div style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
+                <button style='padding: 0 5px 0 5px; margin: 3px 0 3px 0; font-weight: bold;' name='ComeBack' value='Закончить администрирование и вернуться на главную страницу'>
+                Закончить администрирование и вернуться на главную страницу</button>
+                <div style='display: flex; justify-content: space-between; flex-wrap: wrap; margin: 0 0 3px 0; font-weight: bold; width: 471px;'>
+                    <input style='flex-grow: 3; opacity: 0.7;' id='nameCategory' type='text' placeholder='Юля, надо заполнить имя альбома'>
+                    <button style='padding: 0 5px 0 5px; flex-grow: 1;' name='AddCategory' value='Добавить категорию'>Добавить категорию</button>
+                </div>";
             
+            echo "<div id='containerImage' style='display: flex; justify-content: center;'>";
+    
             $allCategory = getAllCategory();
             foreach ($allCategory as $currentCategory) {
 
@@ -141,7 +234,7 @@
                 echo "</div>";
             }
 
-            echo "</div>";
+            echo "</div></div>";
                     
         }
         
@@ -205,6 +298,20 @@
         }
         
 ?>
+     
+        <div id="modal_form" style='width: 250px; height: 65px; border-radius: 5px; border: 3px solid red; background: #fff; position: fixed; top: 45%; left: 50%; margin-top: -150px; margin-left: -150px; display: none; opacity: 0; z-index: 5;'>
+            <div style='display: flex; flex-direction: column'>
+                <div style='display: flex;'>
+                    <p style='margin: 0 auto;'>Уверена что хочешь удалить?</p>
+                    <span id="modal_close" style='width: 21px; height: 21px; cursor: pointer; display: block;'>X</span>
+                </div>
+                <div style='display: flex;'>
+                    <button style='margin: 3px; padding: 3px;' name='Delete' value='Уверена, удаляем.'>Уверена, удаляем.</button>
+                    <button style='margin: 3px; padding: 3px;' name='Cancel' value='Нет, подожди.'>Нет, подожди.</button>
+                </div>
+            </div>
+        </div>
+        <div id="overlay" style='z-index:3; position:fixed; background-color:#000; opacity:0.8; -moz-opacity:0.8; filter:alpha(opacity=80); width:100%; height:100%; top:0; left:0; cursor:pointer; display:none;'></div>
         
     </body>
 </html>
