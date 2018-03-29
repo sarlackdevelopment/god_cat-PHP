@@ -14,6 +14,18 @@ function categoryIsEmpty($nameCategory) {
     
 }
 
+function categoryIsEmptyByID($id) {
+    
+    $category = R::findOne('categorytable', 'id = ?', array($id));
+    
+    if (!$category) {
+        return TRUE;
+    } else {
+        return count($category->ownImgtableList) == 0;   
+    }
+    
+}
+
 function imageExist($path) {
     
     $image = R::findOne('imgtable', 'path = ?', array($path));
@@ -101,13 +113,31 @@ function getAllCategory() {
     
 }
 
+function deleteCategoryByID($id) {
+    
+    $category = R::findOne('categorytable', 'id = ?', array($id));
+    
+    if ($category) {
+
+        $images = R::findAll('imgtable', 'categorytable_id = ?', array($id));
+        
+        foreach ($images as $currentImage) {
+             deleteImageByID($currentImage->id);
+        }
+        
+        R::trash($category);
+        
+    }
+    
+}
+
 function addImageInDB($imgInfo) {
     
     $img = R::dispense('imgtable');
-    $img->path = $imgInfo['path'];
-    $img->width = $imgInfo['width'];
+    $img->path   = $imgInfo['path'];
+    $img->width  = $imgInfo['width'];
     $img->height = $imgInfo['height'];
-    $img->alt = $imgInfo['alt'];
+    $img->alt    = $imgInfo['alt'];
     R::store($img);
     
 }
@@ -127,7 +157,14 @@ function deleteImageByID($id) {
     
     $image = R::findOne('imgtable', 'id = ?', array($id)); 
     if ($image) {
+        
+        $prices = R::findAll('pricetable', 'imgtable_id = ?', array($id)); 
+        foreach ($prices as $currentPrice) {
+            R::trash($currentPrice);
+        }
+        
         R::trash($image);
+        
     }
     
 }
