@@ -38,17 +38,17 @@ function imageExist($path) {
     
 }
 
-function fullLocationOfGallery($nameCategory) {
+function outputAllImageFromGallery($name_for_isotope) {
     
-    $allImageByCategory = getAllImageByCategory($nameCategory);
+    $allImageFromGallery = getAllImageByCategoryByNameForIsotope($name_for_isotope);
     
-    foreach ($allImageByCategory as $currentImage) {
+    foreach ($allImageFromGallery as $currentImage) {
         
-        $imgInfo = ['path' => $currentImage->path,
-                    'location' => $nameCategory,
-                    'width' => $currentImage->width,
-                    'height' => $currentImage->height,
-                    'alt' => $currentImage->alt];
+        $imgInfo = ['path'     => $currentImage->path,
+                    'location' => $name_for_isotope,
+                    'width'    => $currentImage->width,
+                    'height'   => $currentImage->height,
+                    'alt'      => $currentImage->alt];
         
         printImageByInfo($imgInfo);
         
@@ -63,10 +63,10 @@ function addRelationIMG_Category($imgInfo) {
         $category = getCategory($imgInfo['location']);
 
         $img = R::dispense('imgtable');
-        $img->path = $imgInfo['path'];
-        $img->width = $imgInfo['width'];
+        $img->path   = $imgInfo['path'];
+        $img->width  = $imgInfo['width'];
         $img->height = $imgInfo['height'];
-        $img->alt = $imgInfo['alt'];
+        $img->alt    = $imgInfo['alt'];
 
         $category->ownImgtableList[] = $img;
 
@@ -81,11 +81,24 @@ function getCategory($nameCategory) {
     
     if (!$category) {
         $category = R::dispense('categorytable');
-        $category->name = $nameCategory;
+        $category->name             = $nameCategory;
+        $category->name_for_isotope = getLastnameForIsotope();
         R::store($category);
     }
     
     return $category;
+    
+}
+
+function getCategoryByNameForIsotope($name_for_isotope) {
+    
+    $category = R::findOne('categorytable', 'name_for_isotope = ?', array($name_for_isotope));
+    
+    if (!$category) {
+        return false;
+    } else {
+        return $category;
+    }
     
 }
 
@@ -101,9 +114,21 @@ function getCategoryByIdImage($idImage) {
     
 }
 
+function getAllImageByNameForIsotope($name_for_isotope) {
+    
+    return getCategory($name_for_isotope)->ownImgtableList;
+    
+}
+
 function getAllImageByCategory($nameCategory) {
     
     return getCategory($nameCategory)->ownImgtableList;
+    
+}
+
+function getAllImageByCategoryByNameForIsotope($name_for_isotope) {
+    
+    return getCategoryByNameForIsotope($name_for_isotope)->ownImgtableList;
     
 }
 
@@ -171,11 +196,11 @@ function deleteImageByID($id) {
 
 function printImageByInfo($imgInfo) {
     
-    $path = $imgInfo['path'];
+    $path     = $imgInfo['path'];
     $location = $imgInfo['location'];
-    $width = $imgInfo['width'];
-    $height = $imgInfo['height'];
-    $alt = $imgInfo['alt'];
+    $width    = $imgInfo['width'];
+    $height   = $imgInfo['height'];
+    $alt      = $imgInfo['alt'];
     
     echo "
     <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
@@ -199,3 +224,50 @@ function printImageByInfo($imgInfo) {
     
 }
 
+// ****************************************************************************
+// Отрисовка главной страницы
+
+function printCaptionsCategory() {
+    
+    $allCategory = getAllCategory();
+    
+    foreach ($allCategory as $currentCategory) {
+        
+        $nameCategory   = $currentCategory->name;
+        $nameForIsotope = $currentCategory->name_for_isotope;
+        
+        //file_put_contents("newfile.txt", $nameForIsotope, FILE_APPEND | LOCK_EX);
+        
+        echo "<li class='button' data-category=$nameForIsotope>$nameCategory<span>5</span></li>";
+    }
+    
+}
+
+function printAllCategory() {
+   
+    $allCategory = getAllCategory();
+    foreach ($allCategory as $currentCategory) {
+        outputAllImageFromGallery($currentCategory->name_for_isotope);
+    }
+    
+}
+
+function getLastnameForIsotope() {
+    
+    $allCategory = getAllCategory();
+    
+    if (!$allCategory) {
+        return 'cat-1';
+    } else {
+        $lastCategory   = R::findOne('categorytable', 'order by name_for_isotope desc');
+        $nameForIsotope = $lastCategory->name_for_isotope;
+        $pieces         = explode("-", $nameForIsotope);
+
+        return 'cat-' . (string)((integer)$pieces[1] + 1);
+    }
+    
+}
+
+function getQuantityOfArticle() {
+    
+}

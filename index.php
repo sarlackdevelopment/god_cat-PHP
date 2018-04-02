@@ -59,7 +59,7 @@ and open the template in the editor.
                             <li><a href="#">Продажи</a></li>
                             <li><a href="#">Контакты</a></li>
                             <li><a id="loginform" href="loginform.php">Войти</a></li>
-                            <li><a href="testAddImages.php">Тест</a></li>
+                            <li><a href="debug.php">Тест</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
@@ -175,9 +175,10 @@ and open the template in the editor.
                         <div class="filter-menu">
                             <ul class="button-group sort-button-group cl1">
                                 <li class="button active" data-category="all">Все<span>12</span></li>
-                                <li class="button" data-category="cat-1">Кружки<span>5</span></li>
+<!--                                <li class="button" data-category="cat-1">Кружки<span>5</span></li>
                                 <li class="button" data-category="cat-2">Чайники<span>3</span></li>
-                                <li class="button" data-category="cat-3">Наборы<span>4</span></li>
+                                <li class="button" data-category="cat-3">Наборы<span>4</span></li>                                -->
+                                <?php printCaptionsCategory(); ?>
                                 <li><a id="loginform" href="AdminPanel.php">Добавление</a></li>
                             </ul>
                         </div>
@@ -188,11 +189,21 @@ and open the template in the editor.
                     
                     <!--
                         1. Скрыть / отрисовать кнопку администраирования изображений. В зависимости от пользователя.
-                        2. Отрисовать заголовки категорий картинок (напомню: надо придумать им адекватные имена).
-                        3. Проверить работу изотопа когда категорий чуть больше чем четыре.
+                        2. Отрисовать заголовки категорий картинок (напомню: надо придумать им адекватные имена). Cot it
+                        3. Проверить работу изотопа когда категорий чуть больше чем четыре. Cot it
+                        4. Добавить локацию (колонку в таблицу categorytable cat-1 ... cat-n) для правильной работы изотопа. Cot it
+                        5. Доработать правильный расчет колчества товаров.
+                        6. Разработать (спереть откуда нибудь) функционал корзины.
+                            6.1. Отдельная таблица для корзины в разрезе пользователей, товаров и цен на товары.
+                            6.2. Возможность добавлять в корзину / удалать из корзины.
+                        7. Возможность отмечать понравившиеся товары (под это также отдельная таблица).
+                        8. Возможность оповещения смс или на электронную почту о совершении заказа.
+                        9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи.
                     -->
                     
                     <?php
+                                        
+                    printAllCategory();
                     
                     //echo getCurrentPriceByID('156');
                     //getPriceByID('156', 15000);
@@ -254,7 +265,7 @@ and open the template in the editor.
 //                    addRelationIMG_Category($imgInfo3);
 //                    addRelationIMG_Category($imgInfo4);
 //                                            
-//                    fullLocationOfGallery($location);                         
+                    //fullLocationOfGallery($location);                         
                     
                     ?>
                     
