@@ -26,17 +26,23 @@ function categoryIsEmptyByID($id) {
     
 }
 
-function imageExist($path) {
-    
-    $image = R::findOne('imgtable', 'path = ?', array($path));
-    
-    if ($image) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-    
-}
+//function imageExist($path) {
+//    
+//    $image = R::findOne('imgtable', 'path = ?', array($path));
+//    
+//    if ($image) {
+//        return TRUE;
+//    } else {
+//        return FALSE;
+//    }
+//    
+//}
+
+//function getImageByPath($path) {
+//    
+//    return R::findOne('imgtable', 'path = ?', array($path));
+//    
+//}
 
 function outputAllImageFromGallery($name_for_isotope) {
     
@@ -44,11 +50,13 @@ function outputAllImageFromGallery($name_for_isotope) {
     
     foreach ($allImageFromGallery as $currentImage) {
         
-        $imgInfo = ['path'     => $currentImage->path,
+        $imgInfo = ['id'       => $currentImage->id,
+                    'path'     => $currentImage->path,
                     'location' => $name_for_isotope,
                     'width'    => $currentImage->width,
                     'height'   => $currentImage->height,
-                    'alt'      => $currentImage->alt];
+                    'alt'      => $currentImage->alt,
+                    'article'  => $currentImage->article];
         
         printImageByInfo($imgInfo);
         
@@ -58,21 +66,39 @@ function outputAllImageFromGallery($name_for_isotope) {
 
 function addRelationIMG_Category($imgInfo) {
     
+//    if (!exitsImageWithPath($imgInfo['path'])) {
+//        
+//        $category = getCategory($imgInfo['location']);
+//
+//        $img = R::dispense('imgtable');
+//        $img->path   = $imgInfo['path'];
+//        $img->width  = $imgInfo['width'];
+//        $img->height = $imgInfo['height'];
+//        $img->alt    = $imgInfo['alt'];
+//
+//        $category->ownImgtableList[] = $img;
+//
+//        R::store($category);
+//        
+//    }
+    
     if (!exitsImageWithPath($imgInfo['path'])) {
         
         $category = getCategory($imgInfo['location']);
 
         $img = R::dispense('imgtable');
-        $img->path   = $imgInfo['path'];
-        $img->width  = $imgInfo['width'];
-        $img->height = $imgInfo['height'];
-        $img->alt    = $imgInfo['alt'];
+        $img->path    = $imgInfo['path'];
+        $img->width   = $imgInfo['width'];
+        $img->height  = $imgInfo['height'];
+        $img->alt     = $imgInfo['alt'];
+        $img->article = getArticleForImage($category);
 
         $category->ownImgtableList[] = $img;
 
         R::store($category);
         
     }
+    
 }
 
 function getCategory($nameCategory) {
@@ -80,6 +106,7 @@ function getCategory($nameCategory) {
     $category = R::findOne('categorytable', 'name = ?', array($nameCategory));
     
     if (!$category) {
+        
         $category = R::dispense('categorytable');
         $category->name             = $nameCategory;
         $category->name_for_isotope = getLastnameForIsotope();
@@ -114,9 +141,15 @@ function getCategoryByIdImage($idImage) {
     
 }
 
+//function getAllImageByNameForIsotope($name_for_isotope) {
+//    
+//    return getCategory($name_for_isotope)->ownImgtableList;
+//    
+//}
+
 function getAllImageByNameForIsotope($name_for_isotope) {
     
-    return getCategory($name_for_isotope)->ownImgtableList;
+    return getCategoryByNameForIsotope($name_for_isotope)->ownImgtableList;
     
 }
 
@@ -156,15 +189,24 @@ function deleteCategoryByID($id) {
     
 }
 
-function addImageInDB($imgInfo) {
+//function addImageInDB($imgInfo) {
+//    
+//    $img = R::dispense('imgtable');
+//    $img->path   = $imgInfo['path'];
+//    $img->width  = $imgInfo['width'];
+//    $img->height = $imgInfo['height'];
+//    $img->alt    = $imgInfo['alt'];
+//    R::store($img);
+//    
+//}
+
+function getArticleForImage($category) {
+
+    $quantity    = getQuantityOfCategory($category->name_for_isotope);
+    $firstSymbol = mb_substr($category->name, 0, 1, "UTF-8");
     
-    $img = R::dispense('imgtable');
-    $img->path   = $imgInfo['path'];
-    $img->width  = $imgInfo['width'];
-    $img->height = $imgInfo['height'];
-    $img->alt    = $imgInfo['alt'];
-    R::store($img);
-    
+    return $firstSymbol . (string) ($quantity + 1);
+ 
 }
 
 function exitsImageWithPath($path) {
@@ -196,11 +238,13 @@ function deleteImageByID($id) {
 
 function printImageByInfo($imgInfo) {
     
-    $path     = $imgInfo['path'];
-    $location = $imgInfo['location'];
-    $width    = $imgInfo['width'];
-    $height   = $imgInfo['height'];
-    $alt      = $imgInfo['alt'];
+    $path         = $imgInfo['path'];
+    $location     = $imgInfo['location'];
+    $width        = $imgInfo['width'];
+    $height       = $imgInfo['height'];
+    $alt          = $imgInfo['alt'];
+    $article      = $imgInfo['article'];
+    $currentPrice = getCurrentPriceByID($imgInfo['id']) . ' руб.';
     
     echo "
     <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
@@ -215,8 +259,8 @@ function printImageByInfo($imgInfo) {
                 </div>
             <div class='product-title'>
                 <a href='#'>
-                    <h3>Чайник</h3>
-                    <span>700 руб.</span>
+                    <h3>$article</h3>
+                    <span>$currentPrice</span>
                 </a>
             </div>
         </div>
@@ -236,9 +280,9 @@ function printCaptionsCategory() {
         $nameCategory   = $currentCategory->name;
         $nameForIsotope = $currentCategory->name_for_isotope;
         
-        //file_put_contents("newfile.txt", $nameForIsotope, FILE_APPEND | LOCK_EX);
+        $quantityOfCategory = count(getAllImageByCategoryByNameForIsotope($nameForIsotope));
         
-        echo "<li class='button' data-category=$nameForIsotope>$nameCategory<span>5</span></li>";
+        echo "<li class='button' data-category=$nameForIsotope>$nameCategory<span>$quantityOfCategory</span></li>";
     }
     
 }
@@ -268,6 +312,9 @@ function getLastnameForIsotope() {
     
 }
 
-function getQuantityOfArticle() {
+function getQuantityOfCategory($name_for_isotope) {
     
+    $getAllImageByNameForIsotope = getAllImageByNameForIsotope($name_for_isotope);
+    return count($getAllImageByNameForIsotope);
+       
 }

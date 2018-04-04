@@ -207,10 +207,14 @@
         19. В случае если удаляем последнюю картинку из галлереи, удалять и галлерею. - Got it
         20. Попробывать обновить комбобокс при AJAX вызовах работы с категориями.
         21. Если категория с таким именем уже есть, то выводить предупреждение и не создавать новую.
-        22. Добавить повторение фоновой картинки.
+        22. Добавить повторение фоновой картинки. - Got it
+        23. Вне очереди. Адаптировать flex на случай многочисленных категорий. - Got it
+        24. Добавить поле для ввода имени изображения.
+        25. При добавлении изображения в базу задавать артикул изображения Y[N + 1], где Y - это первая цифра имени категории, 
+            а N - количество избражений в категории.
         -->
     
-    <body style='background: #abd28e url(images/fone-for-admin.jpg); background-position: center center; background-repeat: no-repeat;'>        
+    <body style='background: #abd28e url(images/fone-for-admin.jpg); background-position: center center; background-repeat: no-repeat; background-size: 100%;'>        
 <?php
         constructAdminPanel();
         handleOfAddFiles();
@@ -241,7 +245,7 @@
                     <button style='padding: 0 5px 0 5px; flex-grow: 1;' name='DeleteCategory' value='Удалить категорию'>Удалить категорию</button>
                 </div>";
             
-            echo "<div id='containerImage' style='display: flex; justify-content: center;'>";
+            echo "<div id='containerImage' style='display: flex; justify-content: center; flex-wrap: wrap;'>";
     
             foreach ($allCategory as $currentCategory) {
 

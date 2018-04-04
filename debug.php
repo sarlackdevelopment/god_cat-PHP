@@ -16,8 +16,10 @@
                 
         <?php 
             //echo '<pre>' . getCategoryByNameForIsotope("cat-1") . '</pre>'
-            outputAllImageFromGallery("cat-3");
-        
+            //outputAllImageFromGallery("cat-3");
+            //echo getArticleForImage(getCategoryByNameForIsotope("cat-1"));
+            //echo getAllImageByNameForIsotope($name_for_isotope)("cat-1");
+            //phpinfo();
         
         ?>
 

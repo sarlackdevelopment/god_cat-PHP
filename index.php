@@ -63,7 +63,7 @@ and open the template in the editor.
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><span> Корзина -$0&nbsp;</span> <span class="shoping-cart">0</span></a></li>                                                
+                        <li><a href="basket/basket.html"><span> Корзина -$0&nbsp;</span> <span class="shoping-cart">0</span></a></li>                                                
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
@@ -179,7 +179,7 @@ and open the template in the editor.
                                 <li class="button" data-category="cat-2">Чайники<span>3</span></li>
                                 <li class="button" data-category="cat-3">Наборы<span>4</span></li>                                -->
                                 <?php printCaptionsCategory(); ?>
-                                <li><a id="loginform" href="AdminPanel.php">Добавление</a></li>
+                                <li><a id="loginform" href="AdminPanel.php">Администрировать</a></li>
                             </ul>
                         </div>
                     </div>
@@ -192,13 +192,16 @@ and open the template in the editor.
                         2. Отрисовать заголовки категорий картинок (напомню: надо придумать им адекватные имена). Cot it
                         3. Проверить работу изотопа когда категорий чуть больше чем четыре. Cot it
                         4. Добавить локацию (колонку в таблицу categorytable cat-1 ... cat-n) для правильной работы изотопа. Cot it
-                        5. Доработать правильный расчет колчества товаров.
+                        5. Доработать правильный расчет колчества товаров. Cot it
                         6. Разработать (спереть откуда нибудь) функционал корзины.
                             6.1. Отдельная таблица для корзины в разрезе пользователей, товаров и цен на товары.
                             6.2. Возможность добавлять в корзину / удалать из корзины.
                         7. Возможность отмечать понравившиеся товары (под это также отдельная таблица).
                         8. Возможность оповещения смс или на электронную почту о совершении заказа.
-                        9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи.
+                        9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи. Cot it
+                        10. Подставлять актуальные артикулы в галлерею. Cot it
+                        11. Подставить актуальные цены в галлерею. Cot it 
+                        12. Оформить корзину в стиле всего сайта.
                     -->
                     
                     <?php
