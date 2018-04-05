@@ -312,9 +312,35 @@ function getLastnameForIsotope() {
     
 }
 
+function showAllQuantity() {
+    
+    $allQuantity = 0;
+    
+    $allCategory = getAllCategory();
+    foreach ($allCategory as $currentCategory) {
+        $allQuantity = $allQuantity + getQuantityOfCategory($currentCategory->name_for_isotope);
+    }
+    
+    return $allQuantity;
+    
+}
+
 function getQuantityOfCategory($name_for_isotope) {
     
     $getAllImageByNameForIsotope = getAllImageByNameForIsotope($name_for_isotope);
     return count($getAllImageByNameForIsotope);
        
+}
+
+function showAdminPossibilities() {
+    
+    $userPassword = $_SESSION['logged_user']['password'];
+    if ($userPassword == '$2y$10$Q9Y0eIy.PufRCXC83o9gF.C0BP8hGysQJ30oDzpm1IjqEjqQ9T9hy' 
+            or $userPassword == '$2y$10$WKSgYKyGIwKR7fPmhEC/keRT94QlJpvG2OAgvl3qsEle72dXPIOIK') {
+        echo "<li><a id='loginform' href='AdminPanel.php'>Администрировать</a></li>";
+    } else {
+        echo "";
+        
+    }
+    
 }

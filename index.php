@@ -137,7 +137,7 @@ and open the template in the editor.
                 <div class="row">
                     <div class="col-md-12 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s">
                         <div class="service-item">
-                            <h3>О СТУДИИ</h3>
+                            <h3>О СТУДИИ:</h3>
                         </div>
                     </div>  
                     
@@ -174,12 +174,11 @@ and open the template in the editor.
                     <div class="col-md-12">
                         <div class="filter-menu">
                             <ul class="button-group sort-button-group cl1">
-                                <li class="button active" data-category="all">Все<span>12</span></li>
-<!--                                <li class="button" data-category="cat-1">Кружки<span>5</span></li>
-                                <li class="button" data-category="cat-2">Чайники<span>3</span></li>
-                                <li class="button" data-category="cat-3">Наборы<span>4</span></li>                                -->
-                                <?php printCaptionsCategory(); ?>
-                                <li><a id="loginform" href="AdminPanel.php">Администрировать</a></li>
+                                <li class="button active" data-category="all">Все<span><?php echo showAllQuantity() ?></span></li>
+                                <?php 
+                                    printCaptionsCategory(); 
+                                    showAdminPossibilities();
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -188,312 +187,25 @@ and open the template in the editor.
                 <div class="row featured isotope">
                     
                     <!--
-                        1. Скрыть / отрисовать кнопку администраирования изображений. В зависимости от пользователя.
-                        2. Отрисовать заголовки категорий картинок (напомню: надо придумать им адекватные имена). Cot it
-                        3. Проверить работу изотопа когда категорий чуть больше чем четыре. Cot it
-                        4. Добавить локацию (колонку в таблицу categorytable cat-1 ... cat-n) для правильной работы изотопа. Cot it
-                        5. Доработать правильный расчет колчества товаров. Cot it
+                        1. Скрыть / отрисовать кнопку администраирования изображений. В зависимости от пользователя. Got it
+                        2. Отрисовать заголовки категорий картинок (напомню: надо придумать им адекватные имена). Got it
+                        3. Проверить работу изотопа когда категорий чуть больше чем четыре. Got it
+                        4. Добавить локацию (колонку в таблицу categorytable cat-1 ... cat-n) для правильной работы изотопа. Got it
+                        5. Доработать правильный расчет колчества товаров. Got it
                         6. Разработать (спереть откуда нибудь) функционал корзины.
                             6.1. Отдельная таблица для корзины в разрезе пользователей, товаров и цен на товары.
                             6.2. Возможность добавлять в корзину / удалать из корзины.
                         7. Возможность отмечать понравившиеся товары (под это также отдельная таблица).
                         8. Возможность оповещения смс или на электронную почту о совершении заказа.
-                        9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи. Cot it
-                        10. Подставлять актуальные артикулы в галлерею. Cot it
-                        11. Подставить актуальные цены в галлерею. Cot it 
+                        9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи. Got it
+                        10. Подставлять актуальные артикулы в галлерею. Got it
+                        11. Подставить актуальные цены в галлерею. Got it
                         12. Оформить корзину в стиле всего сайта.
+                        14. Отрисовать вместо "Войти" слово "Выйти" при успешной авторизации.
+                        15. Посчитать и вывести количество всех товаров. Got it
                     -->
                     
-                    <?php
-                                        
-                    printAllCategory();
-                    
-                    //echo getCurrentPriceByID('156');
-                    //getPriceByID('156', 15000);
-                    
-//                    $location = 'cat-1';
-//                    
-//                    $imgInfo1 = ['path' => 'images/Галлерея/Все/small/IMG_0007.JPG',
-//                                'location' => $location,
-//                                'width' => '255',
-//                                'height' => '322',
-//                                'alt' => 'Изображение отсутсвует'];
-//                    
-//                    $imgInfo2 = ['path' => 'images/Галлерея/Все/small/IMG_0008.JPG',
-//                                'location' => $location,
-//                                'width' => '255',
-//                                'height' => '322',
-//                                'alt' => 'Изображение отсутсвует'];
-//                    
-//                    addRelationIMG_Category($imgInfo1);
-//                    addRelationIMG_Category($imgInfo2);
-//                    
-//                    fullLocationOfGallery($location);
-
-//                    if (categoryIsEmpty('cat-31')) {
-//                       echo '<div style="color: green;">' . 'Альбом с чайниками пуст. Для добавления новых фото <br>'
-//                               . 'воспользуся кнопкой Выбрать файлы, после выбора <br> нажми Отправить и перезагрузи страницу' . '</div>';
-//                    }
-                    
-                    //upLoadImageInCatalog();
-                    
-//                    $location = 'cat-3';
-//                    
-//                    $imgInfo1 = ['path' => 'images/Галлерея/Все/small/IMG_0002.JPG',
-//                                'location' => $location,
-//                                'width' => '255',
-//                                'height' => '322',
-//                                'alt' => 'Изображение отсутсвует'];
-//                    
-//                    $imgInfo2 = ['path' => 'images/Галлерея/Все/small/IMG_0003.JPG',
-//                                'location' => $location,
-//                                'width' => '255',
-//                                'height' => '322',
-//                                'alt' => 'Изображение отсутсвует'];
-//                    
-//                    $imgInfo3 = ['path' => 'images/Галлерея/Все/small/IMG_0004.JPG',
-//                                'location' => $location,
-//                                'width' => '255',
-//                                'height' => '322',
-//                                'alt' => 'Изображение отсутсвует'];
-//                    
-//                    $imgInfo4 = ['path' => 'images/Галлерея/Все/small/IMG_0005.JPG',
-//                                'location' => $location,
-//                                'width' => '255',
-//                                'height' => '322',
-//                                'alt' => 'Изображение отсутсвует'];
-//                    
-//                    addRelationIMG_Category($imgInfo1);
-//                    addRelationIMG_Category($imgInfo2);
-//                    addRelationIMG_Category($imgInfo3);
-//                    addRelationIMG_Category($imgInfo4);
-//                                            
-                    //fullLocationOfGallery($location);                         
-                    
-                    ?>
-                    
-                    
-                    
-                    <!--<div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0002.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Чайник</h3>
-                                    <span>700 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>                   
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0003.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Чайник</h3>
-                                    <span>700 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0004.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Чайник</h3>
-                                    <span>700 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0005.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Набор</h3>
-                                    <span>750 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0006.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Набор</h3>
-                                    <span>750 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0008.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Набор</h3>
-                                    <span>750 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0009.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Кружка</h3>
-                                    <span>400 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0011.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Кружка</h3>
-                                    <span>400 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0012.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Кружка</h3>
-                                    <span>400 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0016.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Кружка</h3>
-                                    <span>400 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0017.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Кружка</h3>
-                                    <span>400 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="images/Галлерея/Все/small/IMG_0007.JPG" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <a href="#"><i class="pe-7s-like"></i></a>
-                                    <a href="#"><i class="pe-7s-shuffle"></i></a>
-                                    <a href="#"><i class="pe-7s-cart"></i>В корзину</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Набор</h3>
-                                    <span>750 руб.</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>-->
+                    <?php printAllCategory(); ?>
                     
                 </div>
 

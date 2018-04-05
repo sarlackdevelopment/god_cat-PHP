@@ -20,6 +20,9 @@
             //echo getArticleForImage(getCategoryByNameForIsotope("cat-1"));
             //echo getAllImageByNameForIsotope($name_for_isotope)("cat-1");
             //phpinfo();
+            //$data = $_SESSION;
+            //echo $_SESSION['logged_user']['password'];
+            //$user = R::findOne('usertable', 'login = ?', array($data['login']));
         
         ?>
 
