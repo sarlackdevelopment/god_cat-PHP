@@ -334,13 +334,26 @@ function getQuantityOfCategory($name_for_isotope) {
 
 function showAdminPossibilities() {
     
-    $userPassword = $_SESSION['logged_user']['password'];
-    if ($userPassword == '$2y$10$Q9Y0eIy.PufRCXC83o9gF.C0BP8hGysQJ30oDzpm1IjqEjqQ9T9hy' 
-            or $userPassword == '$2y$10$WKSgYKyGIwKR7fPmhEC/keRT94QlJpvG2OAgvl3qsEle72dXPIOIK') {
-        echo "<li><a id='loginform' href='AdminPanel.php'>Администрировать</a></li>";
-    } else {
+    if (!array_key_exists('logged_user', $_SESSION)) {
         echo "";
-        
+    } else {
+        $userPassword = $_SESSION['logged_user']['password'];
+        if ($userPassword == '$2y$10$Q9Y0eIy.PufRCXC83o9gF.C0BP8hGysQJ30oDzpm1IjqEjqQ9T9hy' 
+                or $userPassword == '$2y$10$WKSgYKyGIwKR7fPmhEC/keRT94QlJpvG2OAgvl3qsEle72dXPIOIK') {
+            echo "<li><a id='loginform' href='AdminPanel.php'>Администрировать</a></li>";
+        } else {
+            echo "";  
+        }
     }
     
+}
+
+// Этот метод нужно перенести в соответствующий модуль
+function setItemAuthorization() {
+
+    if (!array_key_exists('logged_user', $_SESSION)) {
+        echo "<li><a id='loginform' href='loginform.php'>Войти</a></li>";
+    } else {
+        echo "<li><a id='loginformExit' href='#'>Выйти</a></li>";
+    }
 }

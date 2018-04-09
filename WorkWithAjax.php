@@ -30,4 +30,9 @@
     if (isset($get['$id_Category'])) {
         deleteCategoryByID($get['$id_Category']);
     }
+    
+    if (isset($get['cleanSession'])) {
+        unset($_SESSION['logged_user']); 
+    }
+    
 

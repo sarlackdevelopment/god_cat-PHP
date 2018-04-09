@@ -123,9 +123,9 @@
 
             if (empty($errors)) {
                 $user = R::dispense('usertable');
-                $user->login = $data['login'];
+                $user->login    = $data['login'];
                 $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
-                $user->email = $data['email'];
+                $user->email    = $data['email'];
                 R::store($user);
             } else {
                 echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
@@ -140,8 +140,9 @@
             if ($user) {
                 if (password_verify($data['password'], $user->password)) {
                     $_SESSION['logged_user'] = $user;
+                    print '<meta http-equiv="refresh" content="0; index.php">';
                     // 'Все хорошо!';
-                    echo '<div style="color: green;">Вы авторизованы!</div><hr>';
+                    //echo '<div style="color: green;">Вы авторизованы!</div><hr>';
                 } else {
                     $errors[] = 'Пароль введен неверно!';
                 }

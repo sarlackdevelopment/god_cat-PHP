@@ -24,6 +24,8 @@
             //echo $_SESSION['logged_user']['password'];
             //$user = R::findOne('usertable', 'login = ?', array($data['login']));
         
+            setItemAuthorization();
+        
         ?>
 
     </body>

@@ -24,6 +24,7 @@ and open the template in the editor.
 
 <!--        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script  src="js/form.js"></script>-->
+        
     </head>
     <body>
         
@@ -52,25 +53,29 @@ and open the template in the editor.
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Главная</a></li>
-                            <li><a href="#">О студии</a></li>
-                            <li><a href="#">Магазин</a></li>
-                            <li><a href="#">Продажи</a></li>
-                            <li><a href="#">Контакты</a></li>
-                            <li><a id="loginform" href="loginform.php">Войти</a></li>
-                            <li><a href="debug.php">Тест</a></li>
+                        <ul class="nav navbar-nav" id="menu">
+                            <li id="main-page" class="active"><a href="#main">Главная</a></li>
+                            <li id="about-page"><a href="#about">О студии</a></li>
+                            <li id="gallery-page"><a href="#gallery">Галлерея</a></li>
+                            <li id="autors-page"><a href="#autors">Авторы</a></li>
+<!--                            <li><a href="#">Магазин</a></li>
+                            <li><a href="#">Продажи</a></li>-->
+                            <li id="contacts-page"><a href="#contacts">Контакты</a></li>
+<!--                            <li><a id="loginform" href="loginform.php">Войти</a></li>-->
+                            
+                            <!--<li><a href="debug.php">Тест</a></li>-->
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                         <li><a href="basket/basket.html"><span> Корзина -$0&nbsp;</span> <span class="shoping-cart">0</span></a></li>                                                
+                        <?php setItemAuthorization() ?>
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
             </nav>
         </header>
 
-        <section class="search-section">
+<!--        <section class="search-section">
             <div class="container">
                 <div class="row subscribe-from">
                     <div class="col-md-12">
@@ -79,13 +84,13 @@ and open the template in the editor.
                                 <input type="email" class="form-control subscribe" id="email" placeholder="Поиск...">
                                 <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
                             </div>
-                        </form><!-- end /. form -->
+                        </form> end /. form 
                     </div>
-                </div><!-- end of/. row -->
-            </div><!-- end of /.container -->
-        </section><!-- end of /.news letter section -->
+                </div> end of/. row 
+            </div> end of /.container 
+        </section> end of /.news letter section -->
 
-        <section class="slider-section">
+        <section class="slider-section" id="main">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators slider-indicators">
@@ -132,7 +137,7 @@ and open the template in the editor.
             </div>
         </section>
 
-        <section class="service-section">
+        <section class="service-section" id="about">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s">
@@ -161,7 +166,7 @@ and open the template in the editor.
             </div>
         </section>
 
-        <section class="featured-section">
+        <section class="featured-section" id="gallery">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -201,8 +206,11 @@ and open the template in the editor.
                         10. Подставлять актуальные артикулы в галлерею. Got it
                         11. Подставить актуальные цены в галлерею. Got it
                         12. Оформить корзину в стиле всего сайта.
-                        14. Отрисовать вместо "Войти" слово "Выйти" при успешной авторизации.
+                        14. Отрисовать вместо "Войти" слово "Выйти" при успешной авторизации. Got it
                         15. Посчитать и вывести количество всех товаров. Got it
+                        16. При нажатии на заказ сделать якорную ссылку на галлерею.
+                        17. Сделать якорные ссылки для меню навигации. Got it
+                        19. Нормально оформить кнопку входа / выхода.
                     -->
                     
                     <?php printAllCategory(); ?>
@@ -212,7 +220,7 @@ and open the template in the editor.
             </div>
         </section>
 
-        <section class="review-section">
+        <section class="review-section" id="autors">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -256,7 +264,7 @@ and open the template in the editor.
             </div>
         </section>
 
-        <section class="contact-section">
+        <section class="contact-section" id="contacts">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
@@ -352,6 +360,43 @@ and open the template in the editor.
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script> 
+        
+        
+        <script>
+            $(document).ready(function () {
+                
+                $('#loginformExit').bind("click", function(event) {
+                    
+                    event.preventDefault();
+                    
+                    $.get("WorkWithAjax.php", { 'cleanSession': true }, function() {
+                        location.reload();
+                    });
+                    
+                });
+                
+                $("#menu").on("click", "a", function (event) {
+
+                    event.preventDefault();
+                    
+                    var id  = $(this).attr('href');
+                    //узнаем высоту от начала страницы до блока на который ссылается якорь
+                    var top = $(id).offset().top;
+                    //анимируем переход на расстояние - top за 800 мс
+                    $('body,html').animate({scrollTop: top}, 800);
+                    
+                    $("#menu").children().each(function(i, elem) {
+                        $(this).removeClass("active");
+                    });
+                    
+                    var $currentId = $(this).parent().attr('id');
+                    $('#' + $currentId).addClass("active");
+
+                });
+                
+            });
+                
+        </script>
         
     </body>
 </html>
