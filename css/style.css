@@ -720,8 +720,8 @@ a.carousel-control.right > span{
     margin-right: 5px;
 }
 .product-hover a:hover{
-    background: #1abc9c;
-    border: 1px solid #1abc9c
+/*    background: #1abc9c;
+    border: 1px solid #1abc9c */
 }
 
 .product-title{

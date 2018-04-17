@@ -35,4 +35,13 @@
         unset($_SESSION['logged_user']); 
     }
     
+    if (isset($get['idForLike'])) {
+        setLike($get['idForLike']);
+        echo getAllLikes();
+    }
+    
+    if (isset($get['idForHaveLike'])) {
+        echo existLikeByID($get['idForHaveLike']);
+    }
+    
 

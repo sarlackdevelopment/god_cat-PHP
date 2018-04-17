@@ -243,20 +243,21 @@ function printImageByInfo($imgInfo) {
     $width        = $imgInfo['width'];
     $height       = $imgInfo['height'];
     $alt          = $imgInfo['alt'];
+    $id           = $imgInfo['id'];
     $article      = $imgInfo['article'];
     $currentPrice = getCurrentPriceByID($imgInfo['id']) . ' руб.';
     
     echo "
     <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
-        <div class='product-item'>
+        <div id=$id class='product-item'>
             <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
-                <div class='product-hover'>
-                    <div class='product-meta'>
-                        <a href='#'><i class='pe-7s-like'></i></a>
-                        <a href='#'><i class='pe-7s-shuffle'></i></a>
-                        <a href='#'><i class='pe-7s-cart'></i>В корзину</a>
-                    </div>
+            <div class='product-hover'>
+                <div class='product-meta'>
+                    <a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>
+                    <a href='#'><i class='pe-7s-shuffle'></i></a>
+                    <a href='#'><i class='pe-7s-cart'></i>В корзину</a>
                 </div>
+            </div>
             <div class='product-title'>
                 <a href='#'>
                     <h3>$article</h3>
@@ -267,6 +268,45 @@ function printImageByInfo($imgInfo) {
     </div>";
     
 }
+
+//function printImageByInfo($imgInfo) {
+//    
+//    $path         = $imgInfo['path'];
+//    $location     = $imgInfo['location'];
+//    $width        = $imgInfo['width'];
+//    $height       = $imgInfo['height'];
+//    $alt          = $imgInfo['alt'];
+//    $id           = $imgInfo['id'];
+//    $article      = $imgInfo['article'];
+//    
+//    $currentPrice        = getCurrentPriceByID($imgInfo['id']) . ' руб.';
+//    $userIsAuthorization = array_key_exists('logged_user', $_SESSION);
+//    
+//    echo "
+//    <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
+//        <div id=$id class='product-item'>
+//            <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
+//            <div class='product-hover'>
+//                <div class='product-meta'>";
+//                    if ($userIsAuthorization) {
+//                        echo "<a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>";
+//                    }
+//                    echo "<a href='#'><i class='pe-7s-shuffle'></i></a>";
+//                    if ($userIsAuthorization) {
+//                        echo "<a href='#'><i class='pe-7s-cart'></i>В корзину</a>";
+//                    }
+//    echo            "</div>
+//            </div>
+//            <div class='product-title'>
+//                <a href='#'>
+//                    <h3>$article</h3>
+//                    <span>$currentPrice</span>
+//                </a>
+//            </div>
+//        </div>
+//    </div>";
+//    
+//}
 
 // ****************************************************************************
 // Отрисовка главной страницы
@@ -348,12 +388,72 @@ function showAdminPossibilities() {
     
 }
 
-// Этот метод нужно перенести в соответствующий модуль
+// Этот метод нужно перенести в соответствующий модуль Авторизации
 function setItemAuthorization() {
 
     if (!array_key_exists('logged_user', $_SESSION)) {
         echo "<li><a id='loginform' href='loginform.php'>Войти</a></li>";
     } else {
-        echo "<li><a id='loginformExit' href='#'>Выйти</a></li>";
+        $allLikes = getAllLikes();
+        echo "
+        <li><a id='loginformExit' href='#'>Выйти</a></li>
+        <li><a id='cart' href='basket/basket.html'><span class='glyphicon glyphicon-pushpin'></span></a></li>
+        <li><a id='like' href='#'><span class='glyphicon glyphicon-star'></span>$allLikes</a></li>";
     }
+}
+
+// Этот метод нужно перенести в соответствующий модуль работы с таблицей лайков
+function setLike($idImage) {
+    
+    // Создаем таблицу или находим строку в уже существующей.
+    $idUser      = $_SESSION['logged_user']['id'];
+    $currentLike = R::findOne('liketable', 'imgtable_id = ? and usertable_id = ?', array($idImage, $idUser));
+    
+    if (!$currentLike) {
+        $currentLike = R::dispense('liketable');
+        $currentLike->likeimg = FALSE;
+    }
+    
+    $currentLike->likeimg = !$currentLike->likeimg;
+    
+    // Ищем текущего пользователя по id и привязываемся к нему как к владельцу лайка.
+    $currentUser = R::findOne('usertable', 'id = ?', array($idUser));
+    $currentUser->ownLiketableList[] = $currentLike;
+    R::store($currentUser);
+    
+    // Ищем текущее изображение по id и привязываемся к нему как к владельцу лайка.
+    $currentImage = R::findOne('imgtable', 'id = ?', array($idImage));
+    $currentImage->ownLiketableList[] = $currentLike;
+    R::store($currentImage);
+    
+}
+
+function getAllLikes() {
+    
+    $idUser = $_SESSION['logged_user']['id'];
+    return R::count('liketable', 'likeimg = ? and usertable_id = ?', array(1, $idUser));
+    
+}
+
+function existLikeByID($idImg) {
+    
+    if (!array_key_exists('logged_user', $_SESSION)) {
+        return FALSE;
+    }
+    
+    $idUser      = $_SESSION['logged_user']['id'];
+    $currentLike = R::findOne('liketable', 'imgtable_id = ? and usertable_id = ?', array($idImg, $idUser));
+    
+    if (!$currentLike) {
+        return FALSE;
+    }
+    else {
+        if ($currentLike->likeimg == 1) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    
 }

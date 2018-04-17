@@ -24,7 +24,10 @@
             //echo $_SESSION['logged_user']['password'];
             //$user = R::findOne('usertable', 'login = ?', array($data['login']));
         
-            setItemAuthorization();
+            //setItemAuthorization();
+            //setLike('467');
+            echo existLikeByID('467');
+        //getAllLikes();
         
         ?>
 

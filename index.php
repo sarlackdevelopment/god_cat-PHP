@@ -8,6 +8,7 @@ and open the template in the editor.
     <?php
     require 'includes/gallery/gallery.php';
     require 'includes/prices/prices.php';
+    //require 'includes/basket/basket.php';
     ?>
     <head>
         <meta charset="UTF-8">
@@ -61,21 +62,24 @@ and open the template in the editor.
 <!--                            <li><a href="#">Магазин</a></li>
                             <li><a href="#">Продажи</a></li>-->
                             <li id="contacts-page"><a href="#contacts">Контакты</a></li>
-<!--                            <li><a id="loginform" href="loginform.php">Войти</a></li>-->
-                            
-                            <!--<li><a href="debug.php">Тест</a></li>-->
+                            <?php setItemAuthorization(); ?>
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
-                        <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="basket/basket.html"><span> Корзина -$0&nbsp;</span> <span class="shoping-cart">0</span></a></li>                                                
-                        <?php setItemAuthorization() ?>
+                            <li><a href="debug.php"><span> Отладка</span></a></li>
+                            
+                            
+                            
+                        <!--не удалять поиск просто пока не нужен<li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>-->
+                        <!--<li><a><span> Вам понравилось -$0&nbsp;</span> <span class="shoping-cart">0</span></a></li>-->    
+<!--                        <li><a href="basket/basket.html"><span> Корзина -$0&nbsp;</span> <span class="shoping-cart">0</span></a></li>-->
+                        
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
             </nav>
         </header>
 
-<!--        <section class="search-section">
+<!--        не удалять поиск просто пока не нужен<section class="search-section">
             <div class="container">
                 <div class="row subscribe-from">
                     <div class="col-md-12">
@@ -84,11 +88,11 @@ and open the template in the editor.
                                 <input type="email" class="form-control subscribe" id="email" placeholder="Поиск...">
                                 <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
                             </div>
-                        </form> end /. form 
+                        </form> 
                     </div>
-                </div> end of/. row 
-            </div> end of /.container 
-        </section> end of /.news letter section -->
+                </div>
+            </div> 
+        </section> -->
 
         <section class="slider-section" id="main">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -106,7 +110,7 @@ and open the template in the editor.
                         <div class="carousel-caption">
                             <h2>КРУЖКИ СЕРВИЗЫ <b>И</b> МНОГОЕ</h2>
                             <h2>ДРУГОЕ НА <b>Л</b>Ю<b>Б</b>О<b>Й</b> ВКУС <Span></Span></h2>
-                            <a href="#">ОФОРМИТЬ ЗАКАЗ</a>
+                            <a class="createOrder" href="#gallery">ОФОРМИТЬ ЗАКАЗ</a>
                         </div>
                     </div>
                     <div class="item">
@@ -114,7 +118,7 @@ and open the template in the editor.
                         <div class="carousel-caption">
                             <h2>КРУЖКИ СЕРВИЗЫ <b>И</b> МНОГОЕ</h2>
                             <h2>ДРУГОЕ НА <b>Л</b>Ю<b>Б</b>О<b>Й</b> ВКУС <Span></Span></h2>
-                            <a href="#">ОФОРМИТЬ ЗАКАЗ</a>
+                            <a class="createOrder" href="#gallery">ОФОРМИТЬ ЗАКАЗ</a>
                         </div>
                     </div>
                     <div class="item ">
@@ -122,7 +126,7 @@ and open the template in the editor.
                         <div class="carousel-caption">
                             <h2>КРУЖКИ СЕРВИЗЫ <b>И</b> МНОГОЕ</h2>
                             <h2>ДРУГОЕ НА <b>Л</b>Ю<b>Б</b>О<b>Й</b> ВКУС <Span></Span></h2>
-                            <a href="#">ОФОРМИТЬ ЗАКАЗ</a>
+                            <a class="createOrder" href="#gallery">ОФОРМИТЬ ЗАКАЗ</a>
                         </div>
                     </div>
                 </div>
@@ -199,18 +203,22 @@ and open the template in the editor.
                         5. Доработать правильный расчет колчества товаров. Got it
                         6. Разработать (спереть откуда нибудь) функционал корзины.
                             6.1. Отдельная таблица для корзины в разрезе пользователей, товаров и цен на товары.
-                            6.2. Возможность добавлять в корзину / удалать из корзины.
-                        7. Возможность отмечать понравившиеся товары (под это также отдельная таблица).
+                            6.2. Возможность добавлять в корзину / удалить из корзины.
+                        7. Возможность отмечать понравившиеся товары (под это также отдельная таблица). Got it.
                         8. Возможность оповещения смс или на электронную почту о совершении заказа.
                         9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи. Got it
                         10. Подставлять актуальные артикулы в галлерею. Got it
                         11. Подставить актуальные цены в галлерею. Got it
-                        12. Оформить корзину в стиле всего сайта.
+                        12. Оформить корзину в стиле всего сайта. Got it
                         14. Отрисовать вместо "Войти" слово "Выйти" при успешной авторизации. Got it
                         15. Посчитать и вывести количество всех товаров. Got it
-                        16. При нажатии на заказ сделать якорную ссылку на галлерею.
+                        16. При нажатии на заказ сделать якорную ссылку на галлерею. Got it
                         17. Сделать якорные ссылки для меню навигации. Got it
-                        19. Нормально оформить кнопку входа / выхода.
+                        19. Нормально оформить кнопку входа / выхода. Got it
+                        20. Довесить к картинкам id при выводе их на страницу. Got it.
+                        21. Попробывать вывести количество лайков на каждую картинку.
+                        22. Всплывающее окно принаведении на значок избранного.
+                        23. Оснасить корзину большой красивой кнопкой КУПИТЬ.
                     -->
                     
                     <?php printAllCategory(); ?>
@@ -376,14 +384,8 @@ and open the template in the editor.
                 });
                 
                 $("#menu").on("click", "a", function (event) {
-
-                    event.preventDefault();
                     
-                    var id  = $(this).attr('href');
-                    //узнаем высоту от начала страницы до блока на который ссылается якорь
-                    var top = $(id).offset().top;
-                    //анимируем переход на расстояние - top за 800 мс
-                    $('body,html').animate({scrollTop: top}, 800);
+                    softSlide(event, this);
                     
                     $("#menu").children().each(function(i, elem) {
                         $(this).removeClass("active");
@@ -393,6 +395,94 @@ and open the template in the editor.
                     $('#' + $currentId).addClass("active");
 
                 });
+
+                $(".carousel-inner").on("click", ".createOrder", function (event) {
+                    softSlide(event, this);                  
+                });
+                
+                function softSlide(event, targetObject) {
+                    
+                    if ((targetObject.id !== 'loginform') && (targetObject.id !== 'cart')) {
+                        
+                        event.preventDefault();
+                    
+                        var id  = $(targetObject).attr('href');
+                        //узнаем высоту от начала страницы до блока на который ссылается якорь
+                        var top = $(id).offset().top;
+                        //анимируем переход на расстояние - top за 800 мс
+                        $('body, html').animate({scrollTop: top}, 800);
+                        
+                    }
+                    
+                };
+
+                $('.product-meta').children('a').hover(
+                    function() {
+                        setStyleLike($(this), {"background": "#1abc9c", "border": "1px solid #1abc9c"}, getIdImg($(this)));
+                    },
+                    function() { 
+                        setStyleLike($(this), {"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"}, getIdImg($(this)));
+                    }
+                );
+                
+                $(".product-item").on("click", ".pe-7s-like", function (event) {
+                    
+                    event.preventDefault();
+                    
+                    $id = getIdImg($(this)); 
+                    if ($id !== 0) {
+                        $.get("WorkWithAjax.php", { 'idForLike': $id }, function(data) {                            
+                            $("#like").replaceWith('<a id="like" href="#"><span class="glyphicon glyphicon-star"></span>' + data + '</a>');
+                        });
+                    }
+                    
+                });
+                
+                $('.product-item').hover(
+                    function() {
+           
+                        setBothStyleLike($('.ref-pe-7s-like'),
+                            {"background": "#1abc9c", "border": "1px solid #1abc9c"}, 
+                            {"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"},
+                            $(this).attr('id'));
+                    }, 
+                    function() {
+
+                        setBothStyleLike($('.ref-pe-7s-like'),
+                            {"background": "#1abc9c", "border": "1px solid #1abc9c"}, 
+                            {"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"},
+                            $(this).attr('id'));
+                    });
+                
+                function setStyleLike($context, $style, $idForHaveLike) {
+                        
+                    $.get("WorkWithAjax.php", { 'idForHaveLike': $idForHaveLike }, function(data) {
+                        if (!data) {
+                            $context.css($style);
+                        }
+                    });
+                    
+                }
+                
+                function setBothStyleLike($context, $firstStyle, $secondStyle, $id) {
+                        
+                    $.get("WorkWithAjax.php", { 'idForHaveLike': $id }, function(data) {
+                        if (data) {
+                            $context.css($firstStyle);
+                        } else {
+                            $context.css($secondStyle);
+                        }
+                    });
+                    
+                }
+                
+                function getIdImg($context) {
+                    var $id = 0;
+                    $context.parents('.product-item').each(function(index, elem) {
+                        $id = elem.id;
+                    });
+                    return $id;
+                }
                 
             });
                 

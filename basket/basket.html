@@ -4,7 +4,9 @@
         <title>Shopping Cart</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="icon" href="images/favicon.png">
         <link rel="stylesheet" type="text/css" href="basket/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="basket/css/custom.css"/>		
     </head>
@@ -20,14 +22,6 @@
             </div>
         </nav>
 
-        <!--		<div class="container-fluid breadcrumbBox text-center">
-                                <ol class="breadcrumb">
-                                        <li><a href="#">Review</a></li>
-                                        <li class="active"><a href="#">Order</a></li>
-                                        <li><a href="#">Payment</a></li>
-                                </ol>
-                        </div>-->
-
         <div class="container text-center">
 
             <div class="col-md-5 col-sm-12">
@@ -37,50 +31,24 @@
                     <!--This is a free and <b><a href="http://tutorialzine.com/2014/04/responsive-shopping-cart-layout-twitter-bootstrap-3/" title="Read the article!">responsive shopping cart layout, made by Tutorialzine</a></b>. It looks nice on both desktop and mobile browsers. Try it by resizing your window (or opening it on your smartphone and pc).-->
                     В ней находятся товары выбранные вами и ожидающие вашей покупки.
                 </p>
+                <p>
+                    Вы можете управлять содержимым своей корзины путем несложных манипуляций:
+                </p>    
             </div>
 
             <div class="col-md-7 col-sm-12 text-left">
                 <ul>
                     <li class="row list-inline columnCaptions">
-                        <span>Артикул товара</span>
+                        <span>Количество</span>
                         <span>Наименование товара</span>
                         <span>Цена</span>
                     </li>
-                    <!--					<li class="row">
-                                                                    <span class="quantity">1</span>
-                                                                    <span class="itemName">Birthday Cake</span>
-                                                                    <span class="popbtn"><a class="arrow"></a></span>
-                                                                    <span class="price">$49.95</span>
-                                                            </li>
-                                                            <li class="row">
-                                                                    <span class="quantity">50</span>
-                                                                    <span class="itemName">Party Cups</span>
-                                                                    <span class="popbtn"><a class="arrow"></a></span>
-                                                                    <span class="price">$5.00</span>
-                                                            </li>
-                                                            <li class="row">
-                                                                    <span class="quantity">20</span>
-                                                                    <span class="itemName">Beer kegs</span>
-                                                                    <span class="popbtn"><a class="arrow"></a></span>
-                                                                    <span class="price">$919.99</span>				
-                                                            </li>
-                                                            <li class="row">
-                                                                    <span class="quantity">18</span>
-                                                                    <span class="itemName">Pound of beef</span>
-                                                                    <span class="popbtn"><a class="arrow"></a></span>
-                                                                    <span class="price">$269.45</span>
-                                                            </li>
-                                                            <li class="row">
-                                                                    <span class="quantity">1</span>
-                                                                    <span class="itemName">Bullet-proof vest</span>
-                                                                    <span class="popbtn"  data-parent="#asd" data-toggle="collapse" data-target="#demo"><a class="arrow"></a></span>
-                                                                    <span class="price">$450.00</span>				
-                                                            </li>
-                                                            <li class="row totals">
-                                                                    <span class="itemName">Total:</span>
-                                                                    <span class="price">$1694.43</span>
-                                                                    <span class="order"> <a class="text-center">ORDER</a></span>
-                                                            </li>-->
+                    <li class="row">
+                        <span class="quantity">1</span>
+                        <span id="itemName" class="itemName">Birthday Cake</span>
+                        <span class="popbtn"><a class="arrow"></a></span>
+                        <span class="price">$49.95</span>
+                    </li>
                 </ul>
             </div>
 
