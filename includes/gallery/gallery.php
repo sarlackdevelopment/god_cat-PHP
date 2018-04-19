@@ -254,8 +254,8 @@ function printImageByInfo($imgInfo) {
             <div class='product-hover'>
                 <div class='product-meta'>
                     <a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>
-                    <a href='#'><i class='pe-7s-shuffle'></i></a>
-                    <a href='#'><i class='pe-7s-cart'></i>В корзину</a>
+                    <a class='ref-pe-7s-shuffle' href='#'><i class='pe-7s-shuffle'></i></a>
+                    <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
                 </div>
             </div>
             <div class='product-title'>
@@ -387,6 +387,20 @@ function showAdminPossibilities() {
     }
     
 }
+
+//// Этот метод нужно перенести в соответствующий модуль Авторизации
+//function setItemAuthorization() {
+//
+//    if (!array_key_exists('logged_user', $_SESSION)) {
+//        echo "<li><a id='loginform' href='loginform.php'>Войти</a></li>";
+//    } else {
+//        $allLikes = getAllLikes();
+//        echo "
+//        <li><a id='loginformExit' href='#'>Выйти</a></li>
+//        <li><a id='cart' href='basket/basket.html'><span class='glyphicon glyphicon-pushpin'></span></a></li>
+//        <li><a id='like' href='#'><span class='glyphicon glyphicon-star'></span>$allLikes</a></li>";
+//    }
+//}
 
 // Этот метод нужно перенести в соответствующий модуль Авторизации
 function setItemAuthorization() {
