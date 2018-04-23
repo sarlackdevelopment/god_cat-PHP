@@ -217,7 +217,7 @@ and open the template in the editor.
                         17. Сделать якорные ссылки для меню навигации. Got it
                         19. Нормально оформить кнопку входа / выхода. Got it
                         20. Довесить к картинкам id при выводе их на страницу. Got it.
-                        21. Попробывать вывести количество лайков на каждую картинку.
+                        21. Попробывать вывести количество лайков на каждую картинку. Got it.
                         22. Всплывающее окно при клике на значок избранного. Got it.
                         23. Оснасить корзину большой красивой кнопкой КУПИТЬ.
                         24. Отработать открытие карточки товара.
@@ -468,12 +468,39 @@ and open the template in the editor.
                     setStyleLike($(this), {"background": "#1abc9c", "border": "1px solid #1abc9c"}, getIdImg($(this)));                   
                 });
                 
+//                $(".product-item").on("click", ".ref-pe-7s-like", function (event) {
+//                    
+//                    event.preventDefault();
+//                    
+//                    var $that = $(this);
+//                    var $id   = getIdImg($(this)); 
+//                    
+//                    if ($id !== 0) {
+//                        $.get("WorkWithAjax.php", { 'idForLike': $id }, function(data) {                            
+//                            $("#like").replaceWith('<a id="like" href="#"><span class="glyphicon glyphicon-star"></span>' + data + '</a>');
+//                            
+//                            $.get("WorkWithAjax.php", { 'idForHaveLike': $id }, function(data) {
+//                                if (data) {
+//                                    $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
+//                                } else {
+//                                    $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
+//                                }
+//                            });
+//                        });
+//                    }
+//                    
+//                });
+                
+                
+                
                 $(".product-item").on("click", ".ref-pe-7s-like", function (event) {
                     
                     event.preventDefault();
                     
-                    var $that = $(this);
-                    var $id   = getIdImg($(this)); 
+                    var $that          = $(this);
+                    var $id            = getIdImg($that);
+                    var $solveLikes    = $that.find($(".quantityLikes"));
+                    var $quantityLikes = +$solveLikes.text();
                     
                     if ($id !== 0) {
                         $.get("WorkWithAjax.php", { 'idForLike': $id }, function(data) {                            
@@ -482,8 +509,10 @@ and open the template in the editor.
                             $.get("WorkWithAjax.php", { 'idForHaveLike': $id }, function(data) {
                                 if (data) {
                                     $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
+                                    $solveLikes.replaceWith("<span class='quantityLikes' style='position: absolute; margin: auto; left: 0; right: 0; top: 26px; bottom: 0; font-size: 40%;'>" + ($quantityLikes + 1) + "</span>");
                                 } else {
                                     $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
+                                    $that.find($(".quantityLikes")).replaceWith("<span class='quantityLikes' style='position: absolute; margin: auto; left: 0; right: 0; top: 26px; bottom: 0; font-size: 40%;'>" + ($quantityLikes - 1) + "</span>");
                                 }
                             });
                         });
@@ -491,10 +520,8 @@ and open the template in the editor.
                     
                 });
                 
-//                $(".close-reveal-modal").bind("click", function (event) {
-//                    event.preventDefault();
-//                    alert('It works!');
-//                });
+                
+                
                               
                 function setStyleLike($context, $style, $idForHaveLike) {
                         

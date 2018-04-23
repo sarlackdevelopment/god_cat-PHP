@@ -236,16 +236,50 @@ function deleteImageByID($id) {
     
 }
 
+//function printImageByInfo($imgInfo) {
+//    
+//    $path         = $imgInfo['path'];
+//    $location     = $imgInfo['location'];
+//    $width        = $imgInfo['width'];
+//    $height       = $imgInfo['height'];
+//    $alt          = $imgInfo['alt'];
+//    $id           = $imgInfo['id'];
+//    $article      = $imgInfo['article'];
+//    $currentPrice = getCurrentPriceByID($imgInfo['id']) . ' руб.';
+//    
+//    echo "
+//    <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
+//        <div id=$id class='product-item'>
+//            <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
+//            <div class='product-hover'>
+//                <div class='product-meta'>
+//                    <a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>
+//                    <a class='ref-pe-7s-shuffle' href='#'><i class='pe-7s-shuffle'></i></a>
+//                    <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
+//                </div>
+//            </div>
+//            <div class='product-title'>
+//                <a href='#'>
+//                    <h3>$article</h3>
+//                    <span>$currentPrice</span>
+//                </a>
+//            </div>
+//        </div>
+//    </div>";
+//    
+//}
+
 function printImageByInfo($imgInfo) {
     
-    $path         = $imgInfo['path'];
-    $location     = $imgInfo['location'];
-    $width        = $imgInfo['width'];
-    $height       = $imgInfo['height'];
-    $alt          = $imgInfo['alt'];
-    $id           = $imgInfo['id'];
-    $article      = $imgInfo['article'];
-    $currentPrice = getCurrentPriceByID($imgInfo['id']) . ' руб.';
+    $path          = $imgInfo['path'];
+    $location      = $imgInfo['location'];
+    $width         = $imgInfo['width'];
+    $height        = $imgInfo['height'];
+    $alt           = $imgInfo['alt'];
+    $id            = $imgInfo['id'];
+    $article       = $imgInfo['article'];
+    $currentPrice  = getCurrentPriceByID($imgInfo['id']) . ' руб.';
+    $quantityLikes = getQuantityLikesByID($id);
     
     echo "
     <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
@@ -253,7 +287,13 @@ function printImageByInfo($imgInfo) {
             <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
             <div class='product-hover'>
                 <div class='product-meta'>
-                    <a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>
+                    <a class='ref-pe-7s-like' href='#'>
+                        <i style='position: relative;' class='pe-7s-like'>
+                            <span class='quantityLikes' style='position: absolute; margin: auto; left: 0; right: 0; top: 26px; bottom: 0; font-size: 40%;'>
+                                $quantityLikes
+                            </span>
+                        </i>
+                    </a>    
                     <a class='ref-pe-7s-shuffle' href='#'><i class='pe-7s-shuffle'></i></a>
                     <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
                 </div>
@@ -268,45 +308,6 @@ function printImageByInfo($imgInfo) {
     </div>";
     
 }
-
-//function printImageByInfo($imgInfo) {
-//    
-//    $path         = $imgInfo['path'];
-//    $location     = $imgInfo['location'];
-//    $width        = $imgInfo['width'];
-//    $height       = $imgInfo['height'];
-//    $alt          = $imgInfo['alt'];
-//    $id           = $imgInfo['id'];
-//    $article      = $imgInfo['article'];
-//    
-//    $currentPrice        = getCurrentPriceByID($imgInfo['id']) . ' руб.';
-//    $userIsAuthorization = array_key_exists('logged_user', $_SESSION);
-//    
-//    echo "
-//    <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
-//        <div id=$id class='product-item'>
-//            <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
-//            <div class='product-hover'>
-//                <div class='product-meta'>";
-//                    if ($userIsAuthorization) {
-//                        echo "<a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>";
-//                    }
-//                    echo "<a href='#'><i class='pe-7s-shuffle'></i></a>";
-//                    if ($userIsAuthorization) {
-//                        echo "<a href='#'><i class='pe-7s-cart'></i>В корзину</a>";
-//                    }
-//    echo            "</div>
-//            </div>
-//            <div class='product-title'>
-//                <a href='#'>
-//                    <h3>$article</h3>
-//                    <span>$currentPrice</span>
-//                </a>
-//            </div>
-//        </div>
-//    </div>";
-//    
-//}
 
 // ****************************************************************************
 // Отрисовка главной страницы
@@ -387,20 +388,6 @@ function showAdminPossibilities() {
     }
     
 }
-
-//// Этот метод нужно перенести в соответствующий модуль Авторизации
-//function setItemAuthorization() {
-//
-//    if (!array_key_exists('logged_user', $_SESSION)) {
-//        echo "<li><a id='loginform' href='loginform.php'>Войти</a></li>";
-//    } else {
-//        $allLikes = getAllLikes();
-//        echo "
-//        <li><a id='loginformExit' href='#'>Выйти</a></li>
-//        <li><a id='cart' href='basket/basket.html'><span class='glyphicon glyphicon-pushpin'></span></a></li>
-//        <li><a id='like' href='#'><span class='glyphicon glyphicon-star'></span>$allLikes</a></li>";
-//    }
-//}
 
 // Этот метод нужно перенести в соответствующий модуль Авторизации
 function setItemAuthorization() {
@@ -521,4 +508,15 @@ function setPreference() {
     
     echo "</div>";
         
+}
+
+function getQuantityLikesByID($id) {
+    
+    $likes = R::count('liketable', 'likeimg = ? and imgtable_id = ?', array(1, $id));
+    if ($likes) {
+        return $likes;
+    } else {
+        return 0;
+    }
+    
 }

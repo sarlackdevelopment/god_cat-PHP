@@ -1452,6 +1452,7 @@ footer.footer p a{
 @media (max-width: 1200px){
      .product-hover a {
         padding: 2%;
+        font-size: 20%;
     }
     a.carousel-control.left, a.carousel-control.right{
         width: 70px;
