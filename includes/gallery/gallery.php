@@ -471,3 +471,54 @@ function existLikeByID($idImg) {
 
     
 }
+
+function setPreference() {
+    
+    $idUser = $_SESSION['logged_user']['id'];
+    
+    $likes = R::findAll('liketable', 'likeimg = ? and usertable_id = ?', array(1, $idUser));
+    
+    echo "<div style='display: flex; flex-wrap: wrap;'>";
+    
+    foreach ($likes as $currentLike) {
+        
+        $currentImage = R::findOne('imgtable', 'id = ?', array($currentLike->imgtable_id));
+        if ($currentImage) {
+        
+            $id           = $currentImage->id;
+            $path         = $currentImage->path;
+            $alt          = $currentImage->alt;
+            $article      = $currentImage->article;          
+            
+            $currentPrice = R::findOne('pricetable', 'imgtable_id = ?', array($currentLike->imgtable_id));
+            if (!$currentPrice) {
+                $currentPrice = '0' . ' руб.';
+            } else {
+                $currentPrice = $currentPrice->price . ' руб.';
+            }
+            
+            echo "
+            <div class='removable' style='width: 210px; height: 170px; margin: 3px;'>
+                <div id=$id class='product-item'>
+                    <img src=$path class='img-responsive' width=150px height=150px alt=$alt>
+                    <div class='product-hover'>
+                        <div class='product-meta'>                   
+                            <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
+                        </div>
+                    </div>
+                    <div class='product-title'>
+                        <a href='#'>
+                            <h3>$article</h3>
+                            <span>$currentPrice</span>
+                        </a>
+                    </div>
+                </div>
+            </div>";
+            
+        }
+        
+    }
+    
+    echo "</div>";
+        
+}

@@ -22,6 +22,7 @@ and open the template in the editor.
         <link rel="icon" href="images/favicon.png">
         <link rel="stylesheet" href="css\style.css">
         <link rel="stylesheet" href="css\gallery.css">
+        <link rel="stylesheet" href="css\modalList.css">
 
 <!--        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script  src="js/form.js"></script>-->
@@ -217,10 +218,11 @@ and open the template in the editor.
                         19. Нормально оформить кнопку входа / выхода. Got it
                         20. Довесить к картинкам id при выводе их на страницу. Got it.
                         21. Попробывать вывести количество лайков на каждую картинку.
-                        22. Всплывающее окно принаведении на значок избранного.
+                        22. Всплывающее окно при клике на значок избранного. Got it.
                         23. Оснасить корзину большой красивой кнопкой КУПИТЬ.
-                        24. Отработать открытие карточки задачи.
+                        24. Отработать открытие карточки товара.
                         25. Отработать hover других кнопок. Got it.
+                        26. Обработать нормальное удаление. Got it.
                     -->
                     
                     <?php printAllCategory(); ?>
@@ -343,7 +345,7 @@ and open the template in the editor.
                                     <div class="input-group">
                                         <input type="submit" class="contact-submit" value="Send" />
                                     </div>
-                                </div>
+                        min-heightmin-height        </div>
                             </div>
                         </form>
                     </div>
@@ -363,24 +365,11 @@ and open the template in the editor.
             </div>
         </footer>
 
-<!--<div style='position: absolute; margin: 0 auto; padding: 10px; background: #f3f3f3; height: 200px; box-shadow: 0 5px 5px rgba(0,0,0,0.3);' class="poster">
-                Какой-то текст который должен быть в блоке<br>
-                <a href="#">Интересная ссылка</a>
-            </div>-->
-
-        <div id="modal_form" style='width: 250px; height: 65px; border-radius: 5px; border: 3px solid red; background: #fff; position: fixed; top: 45%; left: 50%; margin-top: -150px; margin-left: -150px; display: none; opacity: 0; z-index: 5;'>
-            <div style='display: flex; flex-direction: column'>
-                <div style='display: flex;'>
-                    <p style='margin: 0 auto;'>Уверена что хочешь удалить?</p>
-                    <span id="modal_close" style='width: 21px; height: 21px; cursor: pointer; display: block;'>X</span>
-                </div>
-                <div style='display: flex;'>
-                    <button style='margin: 3px; padding: 3px;' name='Delete' value='Уверена, удаляем.'>Уверена, удаляем.</button>
-                    <button style='margin: 3px; padding: 3px;' name='Cancel' value='Нет, подожди.'>Нет, подожди.</button>
-                </div>
-            </div>
+        <div id="myModal" class="reveal-modal">
+            <h1>Ваши предпочтения</h1>
+            <?php setPreference() ?>
+            <a class="close-reveal-modal">&#215;</a>
         </div>
-        <div id="overlay" style='z-index:3; position:fixed; background-color:#000; opacity:0.8; -moz-opacity:0.8; filter:alpha(opacity=80); width:100%; height:100%; top:0; left:0; cursor:pointer; display:none;'></div>
         
         <!-- JQUERY -->
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
@@ -389,6 +378,7 @@ and open the template in the editor.
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script> 
+        <script src="js/modalList.js"></script> 
         
         
         <script>
@@ -423,7 +413,7 @@ and open the template in the editor.
                 
                 function softSlide(event, targetObject) {
                     
-                    if ((targetObject.id !== 'loginform') && (targetObject.id !== 'cart')) {
+                    if ((targetObject.id !== 'loginform') && (targetObject.id !== 'cart') && (targetObject.id !== 'like')) {
                         
                         event.preventDefault();
                     
@@ -501,20 +491,10 @@ and open the template in the editor.
                     
                 });
                 
-                $('#like').hover(
-                    function() {
-                        $('#overlay').fadeIn(400, function() { 
-                            $('#modal_form').css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
-                        });	
-	
-                        $('#modal_close, #overlay').click( function() {
-                                $('#modal_form').animate({opacity: 0, top: '45%'}, 200, function() { 
-                                        $(this).css('display', 'none');
-                                        $('#overlay').fadeOut(400); 
-                                    });
-                            });
-                    }
-                );
+//                $(".close-reveal-modal").bind("click", function (event) {
+//                    event.preventDefault();
+//                    alert('It works!');
+//                });
                               
                 function setStyleLike($context, $style, $idForHaveLike) {
                         

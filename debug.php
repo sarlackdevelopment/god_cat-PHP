@@ -23,10 +23,10 @@
             //$data = $_SESSION;
             //echo $_SESSION['logged_user']['password'];
             //$user = R::findOne('usertable', 'login = ?', array($data['login']));
-        
+            //setPreference();
             //setItemAuthorization();
             //setLike('467');
-            echo existLikeByID('467');
+            //echo existLikeByID('467');
         //getAllLikes();
         
         ?>
