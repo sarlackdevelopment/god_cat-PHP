@@ -26,24 +26,6 @@ function categoryIsEmptyByID($id) {
     
 }
 
-//function imageExist($path) {
-//    
-//    $image = R::findOne('imgtable', 'path = ?', array($path));
-//    
-//    if ($image) {
-//        return TRUE;
-//    } else {
-//        return FALSE;
-//    }
-//    
-//}
-
-//function getImageByPath($path) {
-//    
-//    return R::findOne('imgtable', 'path = ?', array($path));
-//    
-//}
-
 function outputAllImageFromGallery($name_for_isotope) {
     
     $allImageFromGallery = getAllImageByCategoryByNameForIsotope($name_for_isotope);
@@ -65,22 +47,6 @@ function outputAllImageFromGallery($name_for_isotope) {
 }
 
 function addRelationIMG_Category($imgInfo) {
-    
-//    if (!exitsImageWithPath($imgInfo['path'])) {
-//        
-//        $category = getCategory($imgInfo['location']);
-//
-//        $img = R::dispense('imgtable');
-//        $img->path   = $imgInfo['path'];
-//        $img->width  = $imgInfo['width'];
-//        $img->height = $imgInfo['height'];
-//        $img->alt    = $imgInfo['alt'];
-//
-//        $category->ownImgtableList[] = $img;
-//
-//        R::store($category);
-//        
-//    }
     
     if (!exitsImageWithPath($imgInfo['path'])) {
         
@@ -141,12 +107,6 @@ function getCategoryByIdImage($idImage) {
     
 }
 
-//function getAllImageByNameForIsotope($name_for_isotope) {
-//    
-//    return getCategory($name_for_isotope)->ownImgtableList;
-//    
-//}
-
 function getAllImageByNameForIsotope($name_for_isotope) {
     
     return getCategoryByNameForIsotope($name_for_isotope)->ownImgtableList;
@@ -189,17 +149,6 @@ function deleteCategoryByID($id) {
     
 }
 
-//function addImageInDB($imgInfo) {
-//    
-//    $img = R::dispense('imgtable');
-//    $img->path   = $imgInfo['path'];
-//    $img->width  = $imgInfo['width'];
-//    $img->height = $imgInfo['height'];
-//    $img->alt    = $imgInfo['alt'];
-//    R::store($img);
-//    
-//}
-
 function getArticleForImage($category) {
 
     $quantity    = getQuantityOfCategory($category->name_for_isotope);
@@ -236,39 +185,6 @@ function deleteImageByID($id) {
     
 }
 
-//function printImageByInfo($imgInfo) {
-//    
-//    $path         = $imgInfo['path'];
-//    $location     = $imgInfo['location'];
-//    $width        = $imgInfo['width'];
-//    $height       = $imgInfo['height'];
-//    $alt          = $imgInfo['alt'];
-//    $id           = $imgInfo['id'];
-//    $article      = $imgInfo['article'];
-//    $currentPrice = getCurrentPriceByID($imgInfo['id']) . ' руб.';
-//    
-//    echo "
-//    <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
-//        <div id=$id class='product-item'>
-//            <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
-//            <div class='product-hover'>
-//                <div class='product-meta'>
-//                    <a class='ref-pe-7s-like' href='#'><i class='pe-7s-like'></i></a>
-//                    <a class='ref-pe-7s-shuffle' href='#'><i class='pe-7s-shuffle'></i></a>
-//                    <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
-//                </div>
-//            </div>
-//            <div class='product-title'>
-//                <a href='#'>
-//                    <h3>$article</h3>
-//                    <span>$currentPrice</span>
-//                </a>
-//            </div>
-//        </div>
-//    </div>";
-//    
-//}
-
 function printImageByInfo($imgInfo) {
     
     $path          = $imgInfo['path'];
@@ -284,7 +200,9 @@ function printImageByInfo($imgInfo) {
     echo "
     <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
         <div id=$id class='product-item'>
-            <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
+            
+                <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
+            
             <div class='product-hover'>
                 <div class='product-meta'>
                     <a class='ref-pe-7s-like' href='#'>
@@ -293,8 +211,9 @@ function printImageByInfo($imgInfo) {
                                 $quantityLikes
                             </span>
                         </i>
-                    </a>    
-                    <a class='ref-pe-7s-shuffle' href='#'><i class='pe-7s-shuffle'></i></a>
+                    </a>
+                    <a href=$path title='Артикул - $article, цена - $currentPrice, количество оценвших - $quantityLikes' class='gallery ref-pe-7s-shuffle'><i class='pe-7s-shuffle'></i></a>
+                        
                     <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
                 </div>
             </div>

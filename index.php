@@ -22,10 +22,8 @@ and open the template in the editor.
         <link rel="icon" href="images/favicon.png">
         <link rel="stylesheet" href="css\style.css">
         <link rel="stylesheet" href="css\gallery.css">
-        <link rel="stylesheet" href="css\modalList.css">
-
-<!--        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-        <script  src="js/form.js"></script>-->
+        <link rel="stylesheet" href="css\modalList.css">        
+        <link rel="stylesheet" type="text/css" href="fancybox/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
         
     </head>
     <body>
@@ -220,7 +218,7 @@ and open the template in the editor.
                         21. Попробывать вывести количество лайков на каждую картинку. Got it.
                         22. Всплывающее окно при клике на значок избранного. Got it.
                         23. Оснасить корзину большой красивой кнопкой КУПИТЬ.
-                        24. Отработать открытие карточки товара.
+                        24. Отработать открытие карточки товара. Got it.
                         25. Отработать hover других кнопок. Got it.
                         26. Обработать нормальное удаление. Got it.
                     -->
@@ -371,15 +369,17 @@ and open the template in the editor.
             <a class="close-reveal-modal">&#215;</a>
         </div>
         
-        <!-- JQUERY -->
+         JQUERY 
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script> 
-        <script src="js/modalList.js"></script> 
+        <script src="js/modalList.js"></script>
         
+        <script type="text/javascript" src="fancybox/fancybox/jquery.fancybox-1.3.4.js"></script>
+        <!--<script type="text/javascript" src="fancybox/fancybox/jquery.fancybox-1.3.4.pack.js"></script>-->       
         
         <script>
             $(document).ready(function () {
@@ -490,9 +490,7 @@ and open the template in the editor.
 //                    }
 //                    
 //                });
-                
-                
-                
+                                                
                 $(".product-item").on("click", ".ref-pe-7s-like", function (event) {
                     
                     event.preventDefault();
@@ -520,8 +518,14 @@ and open the template in the editor.
                     
                 });
                 
-                
-                
+                $(".gallery").fancybox({
+                    margin: 150,
+                    zoomSpeedIn: 3000,
+                    zoomSpeedOut: 3000,
+                    frameWidth: 750,
+                    frameHeight: 750,
+                    centerOnScroll: true
+                });                
                               
                 function setStyleLike($context, $style, $idForHaveLike) {
                         
