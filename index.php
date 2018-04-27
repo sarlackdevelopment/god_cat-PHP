@@ -8,7 +8,7 @@ and open the template in the editor.
     <?php
     require 'includes/gallery/gallery.php';
     require 'includes/prices/prices.php';
-    //require 'includes/basket/basket.php';
+    require 'basket/basket/BasketEngine.php';
     ?>
     <head>
         <meta charset="UTF-8">
@@ -201,8 +201,9 @@ and open the template in the editor.
                         4. Добавить локацию (колонку в таблицу categorytable cat-1 ... cat-n) для правильной работы изотопа. Got it
                         5. Доработать правильный расчет колчества товаров. Got it
                         6. Разработать (спереть откуда нибудь) функционал корзины.
-                            6.1. Отдельная таблица для корзины в разрезе пользователей, товаров и цен на товары.
-                            6.2. Возможность добавлять в корзину / удалить из корзины.
+                            1. Отдельная таблица для корзины в разрезе пользователей, товаров. Got it
+                            2. Возможность добавлять в корзину / удалить из корзины.
+                            3. Возможность оформить заказ. Отдельная таблица для заказов 
                         7. Возможность отмечать понравившиеся товары (под это также отдельная таблица). Got it.
                         8. Возможность оповещения смс или на электронную почту о совершении заказа.
                         9. Решить путаницу с полями name и name_for_isotope при формировании категорий галлереи. Got it
@@ -217,10 +218,11 @@ and open the template in the editor.
                         20. Довесить к картинкам id при выводе их на страницу. Got it.
                         21. Попробывать вывести количество лайков на каждую картинку. Got it.
                         22. Всплывающее окно при клике на значок избранного. Got it.
-                        23. Оснасить корзину большой красивой кнопкой КУПИТЬ.
+                        23. Оснасить корзину большой красивой кнопкой Оформить заказ. Got it.
                         24. Отработать открытие карточки товара. Got it.
                         25. Отработать hover других кнопок. Got it.
                         26. Обработать нормальное удаление. Got it.
+                        27. Отработать баг с лайками у неавторизованных пользователей.
                     -->
                     
                     <?php printAllCategory(); ?>
@@ -440,6 +442,12 @@ and open the template in the editor.
                                     $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
                                 }
                             });
+                        } else if ($className === 'ref-pe-7s-cart') {
+                            $.get("WorkWithAjax.php", { 'idExistInBasket': $id }, function(data) {
+                                if (!data) {
+                                    $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
+                                } 
+                            });
                         } else {
                             $(this).css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
                         }
@@ -457,39 +465,22 @@ and open the template in the editor.
                                     $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
                                 }
                             });
+                        } else if ($className === 'ref-pe-7s-cart') {
+                            $.get("WorkWithAjax.php", { 'idExistInBasket': $id }, function(data) {
+                                if (!data) {
+                                    $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
+                                } 
+                            });
                         } else {
                             $(this).css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
                         }
                         
                     }
-                );        
+                );
         
                 $('.ref-pe-7s-like').each(function(i, elem) {                   
                     setStyleLike($(this), {"background": "#1abc9c", "border": "1px solid #1abc9c"}, getIdImg($(this)));                   
                 });
-                
-//                $(".product-item").on("click", ".ref-pe-7s-like", function (event) {
-//                    
-//                    event.preventDefault();
-//                    
-//                    var $that = $(this);
-//                    var $id   = getIdImg($(this)); 
-//                    
-//                    if ($id !== 0) {
-//                        $.get("WorkWithAjax.php", { 'idForLike': $id }, function(data) {                            
-//                            $("#like").replaceWith('<a id="like" href="#"><span class="glyphicon glyphicon-star"></span>' + data + '</a>');
-//                            
-//                            $.get("WorkWithAjax.php", { 'idForHaveLike': $id }, function(data) {
-//                                if (data) {
-//                                    $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
-//                                } else {
-//                                    $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
-//                                }
-//                            });
-//                        });
-//                    }
-//                    
-//                });
                                                 
                 $(".product-item").on("click", ".ref-pe-7s-like", function (event) {
                     
@@ -509,15 +500,41 @@ and open the template in the editor.
                                     $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
                                     $solveLikes.replaceWith("<span class='quantityLikes' style='position: absolute; margin: auto; left: 0; right: 0; top: 26px; bottom: 0; font-size: 40%;'>" + ($quantityLikes + 1) + "</span>");
                                 } else {
-                                    $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});
-                                    $that.find($(".quantityLikes")).replaceWith("<span class='quantityLikes' style='position: absolute; margin: auto; left: 0; right: 0; top: 26px; bottom: 0; font-size: 40%;'>" + ($quantityLikes - 1) + "</span>");
+                                    $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});                             
+                                    $solveLikes.replaceWith("<span class='quantityLikes' style='position: absolute; margin: auto; left: 0; right: 0; top: 26px; bottom: 0; font-size: 40%;'>" + ($quantityLikes - 1) + "</span>");
                                 }
                             });
                         });
                     }
                     
                 });
+
+                $(".product-item").on("click", ".ref-pe-7s-cart", function (event) {
                 
+                    event.preventDefault();
+                    
+                    var $that = $(this);
+                    var $id   = getIdImg($that);
+                    
+                    if ($id !== 0) {
+                        
+                        $.get("WorkWithAjax.php", { 'idForBasket': $id }, function(data) { 
+                            $("#cart").replaceWith('<a id="cart" href="#"><span class="glyphicon glyphicon-pushpin"></span>' + data + '</a>');
+                            
+                            $.get("WorkWithAjax.php", { 'idExistInBasket': $id }, function(data) {
+                                if (data) {
+                                    $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
+                                } else {
+                                    $that.css({"background": "rgba(0, 0, 0, 0.5)", "border": "1px solid #fff"});                             
+                                }
+                            });
+                            
+                        });
+                    }                                   
+                    
+                });
+                
+                             
                 $(".gallery").fancybox({
                     margin: 150,
                     zoomSpeedIn: 3000,

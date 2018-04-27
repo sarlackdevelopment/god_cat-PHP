@@ -199,10 +199,8 @@ function printImageByInfo($imgInfo) {
     
     echo "
     <div class='col-md-3 col-sm-6 col-xs-12 $location featured-items isotope-item'>
-        <div id=$id class='product-item'>
-            
-                <img src=$path class='img-responsive' width=$width height=$height alt=$alt>
-            
+        <div id=$id class='product-item'>            
+            <img src=$path class='img-responsive' width=$width height=$height alt=$alt>            
             <div class='product-hover'>
                 <div class='product-meta'>
                     <a class='ref-pe-7s-like' href='#'>
@@ -212,8 +210,7 @@ function printImageByInfo($imgInfo) {
                             </span>
                         </i>
                     </a>
-                    <a href=$path title='Артикул - $article, цена - $currentPrice, количество оценвших - $quantityLikes' class='gallery ref-pe-7s-shuffle'><i class='pe-7s-shuffle'></i></a>
-                        
+                    <a href=$path title='Артикул - $article, цена - $currentPrice, количество оценивших - $quantityLikes' class='gallery ref-pe-7s-shuffle'><i class='pe-7s-shuffle'></i></a>                        
                     <a class='ref-pe-7s-cart' href='#'><i class='pe-7s-cart'></i>В корзину</a>
                 </div>
             </div>
@@ -314,10 +311,11 @@ function setItemAuthorization() {
     if (!array_key_exists('logged_user', $_SESSION)) {
         echo "<li><a id='loginform' href='loginform.php'>Войти</a></li>";
     } else {
-        $allLikes = getAllLikes();
+        $allLikes    = getAllLikes();
+        $allProducts = getAllProducts();
         echo "
         <li><a id='loginformExit' href='#'>Выйти</a></li>
-        <li><a id='cart' href='basket/basket.html'><span class='glyphicon glyphicon-pushpin'></span></a></li>
+        <li><a id='cart' href='basket/basket.php'><span class='glyphicon glyphicon-pushpin'></span>$allProducts</a></li>
         <li><a id='like' href='#'><span class='glyphicon glyphicon-star'></span>$allLikes</a></li>";
     }
 }
@@ -355,6 +353,13 @@ function getAllLikes() {
     
 }
 
+function getAllProducts() {
+    
+    $idUser = $_SESSION['logged_user']['id'];
+    return R::count('baskettable', 'usertable_id = ?', array($idUser));
+    
+}
+
 function existLikeByID($idImg) {
     
     if (!array_key_exists('logged_user', $_SESSION)) {
@@ -374,8 +379,7 @@ function existLikeByID($idImg) {
             return FALSE;
         }
     }
-
-    
+   
 }
 
 function setPreference() {

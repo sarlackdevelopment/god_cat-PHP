@@ -1,6 +1,7 @@
 <?php
     require 'includes/gallery/gallery.php';
     require 'includes/prices/prices.php';
+    require 'basket/basket/BasketEngine.php';
     
     $get = $_GET;
     
@@ -42,6 +43,23 @@
     
     if (isset($get['idForHaveLike'])) {
         echo existLikeByID($get['idForHaveLike']);
+    }
+    
+    if (isset($get['idForBasket'])) {
+        
+        $idProduct = $get['idForBasket'];
+        if (!findProduct($idProduct)) {
+            pushBasket($idProduct);
+        } else {
+            popBasket($idProduct);
+        }
+        
+        echo getAllProducts();
+        
+    }
+    
+    if (isset($get['idExistInBasket'])) {
+        echo existProductByID($get['idExistInBasket']);
     }
     
 

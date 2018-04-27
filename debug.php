@@ -1,5 +1,5 @@
 <html>
-    <?php require 'includes/gallery/gallery.php'; require 'includes/prices/prices.php';?>
+    <?php require 'includes/gallery/gallery.php'; require 'includes/prices/prices.php'; require 'basket/basket/BasketEngine.php'; ?>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -24,8 +24,31 @@
             //echo $_SESSION['logged_user']['password'];
             //$user = R::findOne('usertable', 'login = ?', array($data['login']));
             //setPreference();
+            //pushBasket('467')
+            //popBasket('467');
+            //echo existArticleByID('467')
+            //echo existProductByID('467')
+            //echo getAllProducts();
             //setItemAuthorization();
             //setLike('467');
+            //
+            //$idProduct = $get['idForBasket'];
+        
+        
+//            $idProduct = '467';
+//            pushBasket($idProduct);
+//            if (!findProduct($idProduct)) {
+//                pushBasket($idProduct);
+//            } else {
+//                popBasket($idProduct);
+//            };
+//
+//            echo getAllProducts();
+            
+            
+//
+            //
+            //
             //echo existLikeByID('467');
         //getAllLikes();
         
