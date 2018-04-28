@@ -315,7 +315,7 @@ function setItemAuthorization() {
         $allProducts = getAllProducts();
         echo "
         <li><a id='loginformExit' href='#'>Выйти</a></li>
-        <li><a id='cart' href='basket/basket.php'><span class='glyphicon glyphicon-pushpin'></span>$allProducts</a></li>
+        <li><a id='cart' href='basket.php'><span class='glyphicon glyphicon-pushpin'></span>$allProducts</a></li>
         <li><a id='like' href='#'><span class='glyphicon glyphicon-star'></span>$allLikes</a></li>";
     }
 }

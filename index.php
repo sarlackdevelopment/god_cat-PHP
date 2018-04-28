@@ -223,6 +223,11 @@ and open the template in the editor.
                         25. Отработать hover других кнопок. Got it.
                         26. Обработать нормальное удаление. Got it.
                         27. Отработать баг с лайками у неавторизованных пользователей.
+                        28. Локализовать секцию контактов.
+                        29. Разработать механизм остатков 
+                            1. Включить в панели администратора возможность указывать текущее количество.
+                            2. При оформлении заказа списывать текущее количество.
+                            3. При отсутствии товара на складе вместо кнопки "В корзину" размещать плашку "Товар отсутствует".
                     -->
                     
                     <?php printAllCategory(); ?>
@@ -379,9 +384,7 @@ and open the template in the editor.
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script> 
         <script src="js/modalList.js"></script>
-        
-        <script type="text/javascript" src="fancybox/fancybox/jquery.fancybox-1.3.4.js"></script>
-        <!--<script type="text/javascript" src="fancybox/fancybox/jquery.fancybox-1.3.4.pack.js"></script>-->       
+        <script src="fancybox/fancybox/jquery.fancybox-1.3.4.js"></script>
         
         <script>
             $(document).ready(function () {
@@ -444,7 +447,7 @@ and open the template in the editor.
                             });
                         } else if ($className === 'ref-pe-7s-cart') {
                             $.get("WorkWithAjax.php", { 'idExistInBasket': $id }, function(data) {
-                                if (!data) {
+                                if (!data) {                                   
                                     $that.css({"background": "#1abc9c", "border": "1px solid #1abc9c"});
                                 } 
                             });
@@ -480,6 +483,10 @@ and open the template in the editor.
         
                 $('.ref-pe-7s-like').each(function(i, elem) {                   
                     setStyleLike($(this), {"background": "#1abc9c", "border": "1px solid #1abc9c"}, getIdImg($(this)));                   
+                });
+                
+                $('.ref-pe-7s-cart').each(function(i, elem) {                   
+                    setStyleBasket($(this), {"background": "#1abc9c", "border": "1px solid #1abc9c"}, getIdImg($(this)));                   
                 });
                                                 
                 $(".product-item").on("click", ".ref-pe-7s-like", function (event) {
@@ -533,8 +540,7 @@ and open the template in the editor.
                     }                                   
                     
                 });
-                
-                             
+                                            
                 $(".gallery").fancybox({
                     margin: 150,
                     zoomSpeedIn: 3000,
@@ -547,6 +553,16 @@ and open the template in the editor.
                 function setStyleLike($context, $style, $idForHaveLike) {
                         
                     $.get("WorkWithAjax.php", { 'idForHaveLike': $idForHaveLike }, function(data) {
+                        if (data) {
+                            $context.css($style);
+                        }
+                    });
+                    
+                }
+                
+                function setStyleBasket($context, $style, $idExistInBasket) {
+                        
+                    $.get("WorkWithAjax.php", { 'idExistInBasket': $idExistInBasket }, function(data) {
                         if (data) {
                             $context.css($style);
                         }
